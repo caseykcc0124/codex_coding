@@ -9,6 +9,10 @@ $binding=Get-Content -LiteralPath (Join-Path $runtime 'main-session.json') -Raw|
 if($binding.workspace -ne $Workspace){throw 'Binding workspace mismatch.'}
 try{$lock=[IO.File]::Open((Join-Path $runtime 'main-wake.lock'),'OpenOrCreate','ReadWrite','None')}catch [IO.IOException]{Write-Output 'WAIT: wake active';exit 0}
 try{
+    $workPath=Join-Path $runtime 'work-status.json'
+    if(!(Test-Path -LiteralPath $workPath)){Write-Output 'WAIT: no declared unfinished work';exit 0}
+    $work=Get-Content -LiteralPath $workPath -Raw|ConvertFrom-Json
+    if($work.session_id -ne $binding.session_id -or $work.status -notin @('pending','monitoring')){Write-Output 'WAIT: no actionable persistent work';exit 0}
     if(Test-Path -LiteralPath (Join-Path $runtime 'wake-suspended.json')){Write-Output 'SUSPENDED: input/recovery acceptance required';exit 0}
     $homeRoot=if($env:CODEX_HOME){$env:CODEX_HOME}else{Join-Path $env:USERPROFILE '.codex'}
     Add-Type -Path (Join-Path $PSScriptRoot 'NativeMainRpc.cs')
@@ -30,8 +34,8 @@ try{
     }
     if($pending -and !$pendingComplete){Write-Output 'WAIT: previous queued wake not yet observed complete';exit 0}
     if($active){Write-Output 'WAIT: main turn active';exit 0}
-    $marker='[always-on-wake:'+([guid]::NewGuid().ToString())+']'
-    $prompt="$marker Continue this same main conversation latest human-authorized intent. Read private INTENT and STATE when needed; reconcile current human steering, progress pending work or explicitly authorized new source changes, verify artifacts, and report meaningful completion/failure here. Use bounded native Luna workers only when useful. No new main, inbox, framework, schedule, source scope or external authority. If nothing actionable changed, finish quietly with WAIT without rewriting state. This timer is not a new task."
+    $marker='[自動接續:'+([guid]::NewGuid().ToString('N').Substring(0,8))+']'
+    $prompt="$marker 接續本對話已授權的未完成工作；以最新人類指令為準。無可行動變化就安靜結束，不重寫狀態、不新增工作或權限。"
     $log=Join-Path $runtime ([DateTime]::UtcNow.ToString('yyyyMMddTHHmmssfffffffZ')+'.queue.txt')
     @{marker=$marker;session_id=$binding.session_id;status='dispatching';queued_utc=[DateTime]::UtcNow.ToString('o');log=$log}|ConvertTo-Json|Set-Content -LiteralPath $pendingPath -Encoding UTF8
     $startInfo=[Diagnostics.ProcessStartInfo]::new()

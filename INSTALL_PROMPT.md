@@ -6,7 +6,7 @@
 
 請從 https://github.com/caseykcc0124/codex_coding 取得最新 main，讀取 INSTALL_PROMPT.md、skills/always-on/SKILL.md 與 references/activation.md，將 Always-on 安裝並啟用於目前這個 Codex 主對話。
 
-我的使用方式是直接在目前 Codex 對話交付任務、追加意圖及接收結果。不要另外建立聊天、inbox、UI、框架或工作入口。GitHub 僅作安裝來源。這次指令授權安裝必要技能與合併規則、建立本對話每 15 分鐘的喚醒及有界功能驗證，不授權掃描未指定帳號或對外發送內容。
+我的使用方式是直接在目前 Codex 對話交付任務、追加意圖及接收結果。這次明確啟用（或輸入 $always-on）已授權使用目前對話；若工作區綁定舊對話，請內部備份並停用舊 timer，以 -ActivateHere 切到目前對話，不再問一次遷移確認。不要另外建立聊天、inbox、UI、框架或工作入口。GitHub 僅作安裝來源。這次指令授權安裝必要技能與合併規則、建立本對話每 15 分鐘的喚醒及有界功能驗證，不授權掃描未指定帳號或對外發送內容。
 
 ### 1. 保留現有環境並安裝
 
@@ -44,3 +44,7 @@
 讀取 RECOVERY.md。確認主對話不會停在 Running hook、能接收人類輸入並回到 idle prompt；不能只查 transcript。主 timer 配套的 -Recovery timer 每分鐘做非模型健康檢查，只處理經核對的超時 setup refresh，不殺 Main、不取消人類回合、不關閉安全保護。測試恢復策略的拒絕條件與監控健康路徑；未做完整故障注入時明確標示，不宣稱所有卡死都已自救。已有輸入回歸 suspension 時先保留暫停、修復並驗收，不能用再次啟用掩蓋問題。
 
 完成後簡短回報：安裝版本、綁定的 Main、啟用的喚醒通道、下次時間、已完成的驗收與真正未解決的項目。不要要求我執行 PS1、填 inbox 或換到另一個對話。
+
+### 6. 不干擾工作
+
+啟用後一般任務直接執行，不再每輪檢查安裝、綁定、模型或要求確認。Main 自行維護 runtime/work-status.json（含 session_id、status）：未完成可推進工作用 pending、明確監控責任用 monitoring、完成/無任務用 idle、阻塞用 blocked。沒有 pending/monitoring 時 timer 不呼叫模型或 queue。啟用只簡短回覆「已啟用，可以直接交辦工作」，不在正常回覆印出 UUID、腳本路徑或技術狀態。

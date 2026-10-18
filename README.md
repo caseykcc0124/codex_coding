@@ -28,3 +28,7 @@ Main 預期 Sol Low，原生 Worker 預期 Luna Low；已開啟對話的實際�
 ## 輸入可靠性修正
 
 使用者回報 Running hook 卡死後，先前僅憑 transcript 判定可用的結論已修正。新版增加原生健康守門、輸入驗收與有界 setup 超時監控；實際處置、測試及未驗證界線見 [RECOVERY.md](RECOVERY.md)。不能把 queue 成功當作完整自主性。
+
+## 啟用不重複追問
+
+輸入 $always-on 就已明確指定目前對話。Agent 內部切換並停用舊 timer，不再問「要遷移綁定嗎」。一般任務直接執行，閒置時不 queue 技術訊息、不呼叫模型。內部 durable work status 由 Main 維護，不要求使用者編輯。
