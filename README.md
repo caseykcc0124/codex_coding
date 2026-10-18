@@ -1,24 +1,30 @@
 # Codex Native Autonomy V2.1
 
-以原生 Codex Main Agent 與 Luna Sub-Agent 組成的輕量 Always-on Agent POC。重點是事件輪詢、有限派工、工作證據、WAIT 與恢復，不引入額外後端、UI 或第三方代理框架。
+原生 Codex 的常駐意圖自主代理。Main 與人類保持單一入口，Luna 子代理負責可驗證的有限工作。使用 `AGENTS.md`、`.codex/`、`.autonomy/` 保存規則與狀態，不引入第三方 Agent Framework 或額外後端。
 
-## 取得與安裝
+**目前的安裝方式是直接上線，不需要先做三輪冒煙測試。**
 
-1. 複製這個公開範本儲存庫：`git clone https://github.com/caseykcc0124/codex_coding.git`。
-2. 閱讀 [INSTALL_PROMPT.md](./INSTALL_PROMPT.md)，在**公司核准的 Codex 環境**中將安裝指令交給 Agent。
-3. 安裝 Agent 必須先檢查全域與專案 `AGENTS.md`，只合併 POC 所需的專案層設定，不覆寫公司既有資源與認證。
-4. 在測試工作區完成 WAIT、單一事件派工與再次喚醒去重的三次手動測試；通過後才考慮原生排程。
+## 正式安裝
 
-## 模型配置
+1. 在**公司核准的 Codex** 開啟 [INSTALL_PROMPT.md](./INSTALL_PROMPT.md)。
+2. 將其中「交給 Codex 的指令」交給安裝 Agent，讓它自行檢查相容性、最小合併設定、保存狀態、開始處理已授權的實際工作，並盡可能啟用 Codex 原生排程。
+3. 安裝完直接把開發任務、指定 Teams Working Group 或 Outlook 待辦交給 Main Agent，不必逐輪做模擬測試。
 
-Main 預期 `gpt-6.1-sol`、low；Worker 預期 `gpt-6-luna`、low；最多 2 個原生子代理。實際可用性取決於 Codex 版本、公司模型路由與政策，尚未在公司環境驗證。
+預期模型：Main `gpt-6.1-sol`／low；Worker `gpt-6-luna`／low。模型是否能使用必須依公司實際環境核實。
 
-## 公開與私有資料界線
+## 正式運作行為
 
-此公開儲存庫僅保留**一般化 POC 設定範本**，沒有公司內部 AGENTS.md、MCP 位址、認證資料、郵件、Teams 或工作產物。實際運行時的 `.autonomy/work/` 與 `.autonomy/inbox/` 應留在受控工作區，避免推送公開 GitHub。
+- 長期 Intent 持續存在，每次喚醒有限工作。沒有新事件立即 WAIT，不用無限 Goal 空轉。
+- Main 規劃、派工、驗收；原生子代理做具體工作，交付證據。
+- `.autonomy/STATE.md` 保存事件游標與去重，`PROGRESS.md` 保存可接續的工作進度，`work/` 保存詳細證據。
+- 一般低影響可恢復的工作按授權自主完成並通知；涉及新的外部承諾或不可逆操作才請求必要決策。
 
-## 限制
+## 原生 Always-on 限制
 
-範本中 AGENTS.md 的停止、去重與成本規則只是模型應遵循的軟規則，不構成 Token 的硬預算控制。排程功能依安裝時的 Codex 客戶端能力而定，不應假設已存在。
+能否無人值守定期醒來，取決於**實際安裝的 Codex 客戶端是否支援原生 Automation 並已成功啟用**。安裝 Agent 要自行確認；不能把互動 Thread 冒充成常駐排程。若原生能力不存在，先啟用可正常使用的 Main／Worker 互動模式並報告唯一阻礙，不另造 Scheduler。
 
-此儲存庫提供可檢視與複製的來源檔案。另有 ZIP 安裝包在原始對話中提供下載，但**目前未將 ZIP 二進位檔提交至 GitHub**。
+## 公司資料界線
+
+本公開 repo 只有一般化設定範本。公司全域 AGENTS、MCP URL、帳密、Teams、Outlook、內部程式碼及運行時工作狀態不能推送至此。公司強制政策仍有效，專案配置以最小差異方式合併，不覆寫全域設定。
+
+ZIP 安裝包目前未放入公開 GitHub；從本 Repo 克隆或下載來源檔即可安裝。
