@@ -1,20 +1,13 @@
-# Codex Native Autonomy：Windows CLI 安裝與啟用
+# 交給 Codex 的一次性安裝指令
 
-此專案使用 Codex CLI、原生 Luna 子代理、私有 Markdown 狀態與 Windows 工作排程器。沒有額外 Agent framework 或常駐後端。
+讀取本 repo，將 always-on skill 安裝到目前使用者的既有 Codex，並把必要啟用規則合併進使用者 AGENTS.md。使用 scripts/Install-AlwaysOn.ps1，由你執行內部安裝，不要求人類開 PowerShell。先檢查現有設定，保留全部既有內容；腳本只備份並合併有標記的規則區塊，不修改 config.toml、模型路由、MCP、認證或其他 skills。
 
-## 交給安裝 Agent 的指令
+安裝完成後，在目前人類選定的 Codex 主對話讀取並啟用 always-on skill。所有任務、修正、執行、有限原生子代理派工、驗收及回報都以此主對話為入口。不要建立另一個聊天、UI、inbox 工作入口或代理框架。GitHub 是來源，不是日常操作介面。
 
-在目前授權的 Windows 工作區部署此專案。先讀 AGENTS.md 與 WINDOWS_CLI.md；保留全域 AGENTS、MCP、Skills、認證與公司強制政策，只合併必要的專案設定。Main 使用 gpt-6.1-sol low，原生 poc_worker 使用 gpt-6-luna low，不得假稱模型已切換。
+根據真實意圖建立或合併私有 INTENT、STATE、PROGRESS，不覆寫舊責任。若有舊 inbox 定時任務，確認是本次安裝留下的後停用，保留舊狀態。不要影響其他排程。
 
-1. 取得一般化來源並檢查腳本。備份將合併的專案檔案，不覆寫既有私有狀態。
-2. 從 .autonomy/templates 初始化 INTENT.md、STATE.md、PROGRESS.md；依人類最新意圖寫入工作範圍及授權。實際公司資料不得公開。
-3. 驗證 CLI 登入、sandbox 命令與工作區寫入、原生子代理、指定 Session 恢復。Windows runner 使用 MXC sandbox，不跳過審批或關閉隔離。若公司裝置不支援 MXC，停止並呈報明確原因，不自行放寬權限。
-4. 自行完成一項有界事件驗收、第二項事件 Session 恢復、相同事件不再呼叫模型、Windows 排程實際觸發的確認。不要要求人類逐輪操作。任何失敗保留本地證據並修復，不能只以排程已建立宣稱能工作。
-5. 人類已授權長期運作時，使用 scripts/Register-AutonomyTask.ps1 建立每 15 分鐘任務。未授權則只做一次性驗證。確認任務、下一次時間與實際執行結果。
-6. 日常工作透過 scripts/Submit-AutonomyEvent.ps1 寫入明確任務與驗收條件。Main 每輪最多處理一個事件；必要時派一名原生 Worker，驗證證據並更新狀態後結束。沒有新事件時不呼叫模型。
-7. Teams/Outlook 只有在明確指定授權範圍、實際連線與游標收集方式後才啟用。不得掃描未指定的公司資料。目前 runner 只收本地 inbox，不能宣稱已監聽郵件或聊天。
-8. 使用 Get-AutonomyStatus.ps1 查看進度、阻塞、Session、最近結果與排程。結果保存在本地；LINE、郵件或其他外發通知必須另有明確授權與實際通知通道。
+已授權 Always-on 時依技能 activation.md 接上同對話喚醒。桌面版使用實際可呼叫的 native heartbeat；CLI-only Windows 綁定已確認的當前 UUID，不用 --last、不建立替代 Main。人類不需操作內部腳本。未提供當前 UUID 的 CLI 入口，不准猜最新 Session。已有活動回合時跳過背景恢復，並明確呈報互動終端同步顯示的驗證限制。
 
-可自主執行授權工作區的可恢復修改、測試、證據保存與草稿。外發、push、部署、刪除及新增承諾依人類明確授權處理；本 runner 保守禁止這些外部副作用。阻塞事件不空轉，修復後更新原事件再觸發。
+確認技能發現、既有規則保留、同主對話綁定、實際恢復與結果保存，再分別回報已安裝、已建立排程、已實際觸發、尚未驗證。不要把建立排程當成已完成第一次定時喚醒。Main 預期 gpt-6.1-sol low，原生 Worker gpt-6-luna low；不得聲稱載入技能已改變當前模型。
 
-完成後只回報實際可用能力、已啟用來源、排程狀態及下一次時間、真正未解決的阻礙。不得把本機結果當成公司電腦也已部署。完整條件與限制見 WINDOWS_CLI.md。
+人類之後只在 Codex 正常說話。沒有新工作安靜等待，未完成且有合理下一步就繼續，阻塞保存恢復條件；不做無限 Goal、不空轉。對外操作與來源範圍依既有授權，不因自主模式擴權。安裝與必要驗證自行完成，不把普通工程決策交還人類。

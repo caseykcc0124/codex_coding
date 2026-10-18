@@ -1,1 +1,1 @@
-這是 Windows 工作排程器觸發的有限回合，不是 CLI 原生 Scheduler。使用 scripts/Invoke-Autonomy.ps1 讀取明確授權的本地 inbox、處理一個新事件、恢復指定 Session、驗證成果並保存游標。無事件立即 WAIT；不把 STATE、PROGRESS 或 runtime 當事件。阻塞時保留證據與恢復條件，不重試相同雜湊。不得自行掃描 Teams/Outlook、外發、push、部署或變更排程。
+接續同一主對話中人類最新意圖，推進未完成工作或明確授權來源的新事件，驗收成果並在本對話回報有意義變化；無變化安靜結束，不把喚醒當新任務，不另建 inbox 或 Main。

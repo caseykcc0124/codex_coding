@@ -1,15 +1,26 @@
-# Codex Native Autonomy
+# Codex Always-on 主對話
 
-Codex CLI 主代理使用 GPT-6.1 Sol Low，原生 poc_worker 使用 GPT-6 Luna Low。以私有 Markdown 狀態保存意圖與證據，由 Windows 工作排程器每 15 分鐘啟動有限回合。沒有新事件時直接 WAIT，不呼叫模型。
+安裝到既有 Codex，讓你直接在 Codex 主對話交付任務、追加意圖、查看結果。GitHub 只提供安裝材料；日常不需要操作 GitHub、PS1 或 inbox。
 
-- [部署指令](./INSTALL_PROMPT.md)
-- [Windows CLI 操作、權限及限制](./WINDOWS_CLI.md)
-- [代理規則](./AGENTS.md)
+## 使用
 
-日常以 scripts/Submit-AutonomyEvent.ps1 交付任務與驗收條件，以 scripts/Get-AutonomyStatus.ps1 查看結果。Main 自行判斷、有限派工、驗收並保存證據。阻塞事件保留恢復條件，不反覆空轉。
+首次把這個 repo 的 INSTALL_PROMPT.md 交給 Codex 安裝。之後在你要作為 Main 的 Codex 對話說：
 
-目前工作來源為明確授權的本地 inbox。Teams、Outlook、其他專案與外發通知必須另外指定授權範圍及實際接入方式；此 repo 不會自行掃描公司帳號。Windows 排程不是 CLI 原生 Scheduler，也不能在電腦關機或使用者登出時保證執行。
+> 啟用 Always On。這個對話就是主代理，持續處理我交付的工作，保存進度，適合時派 Luna 子代理，完成後在這裡回報。
 
-Windows runner 使用 MXC sandbox，保留公司全域設定與強制政策。部署者須實際驗證裝置相容性，不因其他電腦已通過就宣稱當前裝置也能運作。
+也可以使用 `$always-on`。技能安裝到使用者層，因此其他工作區的新 Codex 對話也可發現它；新的對話不會擅自取代既有 Main。安裝後目前已開啟的客戶端可能需重新載入技能。
 
-公開 repo 只放一般化規則與腳本；實際 INTENT、STATE、PROGRESS、inbox、成果、Session 與日誌均保留於本地且被 Git 忽略。不得提交公司機密、MCP URL 或憑證。
+- [安裝指令](INSTALL_PROMPT.md)
+- [實際技能](skills/always-on/SKILL.md)
+- [需求、實作與驗證界線](ALIGNMENT.md)
+- [Windows CLI 的同 Session 接續](WINDOWS_CLI.md)
+
+## 喚醒能力
+
+桌面版若提供 native heartbeat，直接綁定啟用時的主對話，後續在該對話接續。CLI-only Windows 可由內部排程恢復已確認的同一 Session UUID；不能據此保證已開啟的終端畫面即時刷新。沒有可用喚醒工具或無法辨識當前 Session 時必須回報，不能假稱 AGENTS.md 自己會醒來。
+
+Main 預期 Sol Low，原生 Worker 預期 Luna Low；已開啟對話的實際模型由客戶端決定，載入技能不會自動更換它。保留既有 MCP、Skills、認證與公司政策。Teams/Outlook 需要明確授權及接通來源，沒有預設掃描。
+
+舊 scripts/Submit-AutonomyEvent.ps1、Invoke-Autonomy.ps1、Register-AutonomyTask.ps1 是先前偏離需求的 inbox 路線，僅保留供遷移追溯；不要用它們安裝或啟用新版。停用舊任務後啟用同主對話喚醒，不能兩套同時運作。
+
+實際意圖、狀態、Session、成果與日誌僅留本地，不上傳公開 Git。

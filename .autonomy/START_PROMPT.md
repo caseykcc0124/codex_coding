@@ -1,1 +1,1 @@
-依 INSTALL_PROMPT.md 與 WINDOWS_CLI.md 部署本工作區。保留全域設定及既有私有狀態。Main Sol Low、原生 poc_worker Luna Low。Windows 使用 MXC sandbox 與已授權的每 15 分鐘排程；先確認實際命令、寫入、Session 恢復、事件去重及排程觸發。沒有新事件不呼叫模型。只收明確交付的本地 inbox；Teams、Outlook 與對外通知另行設定授權範圍。自行完成必要修復與驗收，不讓人類逐輪操作，不建立其他後端或無限 Goal。
+讀取 INSTALL_PROMPT.md，在現有 Codex 安裝 always-on skill，以目前人類選定的對話作 Main，依技能綁定同對話喚醒。日常不使用 inbox。
