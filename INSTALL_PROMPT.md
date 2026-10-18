@@ -6,7 +6,7 @@
 
 根據真實意圖建立或合併私有 INTENT、STATE、PROGRESS，不覆寫舊責任。若有舊 inbox 定時任務，確認是本次安裝留下的後停用，保留舊狀態。不要影響其他排程。
 
-已授權 Always-on 時依技能 activation.md 接上同對話喚醒。桌面版使用實際可呼叫的 native heartbeat；CLI-only Windows 綁定已確認的當前 UUID，不用 --last、不建立替代 Main。人類不需操作內部腳本。未提供當前 UUID 的 CLI 入口，不准猜最新 Session。已有活動回合時跳過背景恢復，並明確呈報互動終端同步顯示的驗證限制。
+已授權 Always-on 時依技能 activation.md 接上同對話喚醒。桌面版使用實際可呼叫的 native heartbeat；本機 CUI/CLI/IDE 驗證原生 codex queue 後綁定已確認的當前 UUID；source=vscode 不代表不支援，不用 exec resume、不建立替代 Main。人類不需操作內部腳本。未提供當前 UUID 的 CLI 入口，不准猜最新 Session。已有活動回合或未完成 tick 時跳過排隊。分別驗證 queue ack、原主對話實際回覆與排程呼叫，明確呈報其他環境的界線。
 
 確認技能發現、既有規則保留、同主對話綁定、實際恢復與結果保存，再分別回報已安裝、已建立排程、已實際觸發、尚未驗證。不要把建立排程當成已完成第一次定時喚醒。Main 預期 gpt-6.1-sol low，原生 Worker gpt-6-luna low；不得聲稱載入技能已改變當前模型。
 

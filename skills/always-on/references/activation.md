@@ -1,19 +1,19 @@
-# Client activation
+# Activation by available native transport
 
-## Codex desktop / local Work chat with native heartbeat tools
+The current conversation is always the interface. Pick by verified capabilities, not the product label or transcript source alone.
 
-Discover automation_update. Inspect existing automation metadata for the matching main before creating a duplicate. Use kind=heartbeat, destination=thread, and the current thread (omit targetThreadId when the tool binds the caller). Default interval is 15 minutes. Use the tool's structured schedule fields; do not print raw scheduling directives as instructions to the user.
+## Native same-thread heartbeat
 
-Prompt: Continue this main conversation's latest authorized intent. Read private intent/checkpoint when needed, reconcile recent human steering, progress unfinished work or authorized new source changes, use bounded native Luna workers when useful, verify evidence, preserve state and report meaningful changes in this conversation. No unrelated source scans, new chats, infinite goals or unapproved external effects. If nothing actionable changed, finish quietly.
+Where automation_update is available, use a heartbeat bound to the current thread, preserving human intent, with no unchanged-state notifications. Inspect matching existing automations before creating another. Record its actual tool result privately. Do not substitute a standalone cron/new chat.
 
-Store returned automation ID and bound thread ID privately; never put a native automation capability into public templates. Verify actual tool result. Existing chats may require opening a new turn/client refresh to discover newly installed skills. Do not claim the current model changed due to loading this skill.
+## Local CUI/CLI/IDE with native queue (Windows timer)
 
-## Codex CLI on Windows
+Verify `codex queue --help` and that the existing native shared local server owns/can reach the original main; do not start a replacement server, identify the current UUID from CODEX_THREAD_ID or trusted current runtime metadata, verify its stored source and cwd, then internally run Bind-Session.ps1. Source vscode is accepted along with cli and exec. No UUID guesses or new Main.
 
-The agent runs scripts/Bind-Session.ps1 -Workspace <authorized root> -SessionId <verified UUID> internally. It verifies stored source is cli and cwd matches, then registers the wake against that UUID. Do not guess UUID from the latest session, copy auth, alter global sandbox or spawn a replacement main. This path only supports local Windows CLI.
+Wake-Session.ps1 calls native `codex queue --remote unix:// --thread UUID --message ...`. The running Codex process remains the writer and handles the queued wake in the same conversation; no exec resume, second model process, permission override or model override. It skips known active turns and holds one outstanding tick until transcript completion is observed. Queue errors stop without resume fallback. A missing/paginated transcript conservatively leaves the tick pending rather than flooding messages; investigate and reconcile the pending marker, never delete it just to retry blindly.
 
-Use scripts/Wake-Session.ps1 for an internal finite check. Inspect its JSONL for matching thread.started and turn.completed, and inspect the stored transcript for result persistence. Pause by disabling the returned task; resume by enabling it. Updating tasks means editing persistent intent through the main conversation, not Submit-AutonomyEvent.ps1.
+Test with a bounded marker message, verify assistant output and completion in the exact bound transcript, then test the registered task. Distinguish queue acknowledgement, execution and UI display. The real 0.163.0 vscode-source main accepted a native queue message and returned the marker while live; exec resume on the same main failed with active writer conflict. Source-label rejection was therefore incorrect.
 
-The wake skips when the transcript indicates an active turn. There is still a race if the user starts a turn immediately after the check; simultaneous live CLI/worker UI behavior is client-dependent. Do not promise synchronized live rendering. For a strict single active executor, pause the timer during interactive work. It is not a message bridge to desktop chats.
+Pause/resume by disabling/enabling the bound Windows task. Existing task registration must be inspected rather than duplicated. Do not require the human to execute helpers. Do not promise operation when a client is closed/offline or on another OS without a verified timer/transport adapter.
 
-Windows requires login, working network/auth and supported MXC sandbox. Fail closed on unsupported isolation. Do not downgrade safety or terminate other sessions to make it work.
+Binding saves the verified native binary and explicit native shared-server endpoint (unix://) privately so a headless timer uses the same transport. Queue client acknowledgement is bounded; only the newly created client may be ended after ack if it holds handles, never its process tree/server/main. Uncertain delivery leaves a pending marker and must be reconciled, not blindly retried.

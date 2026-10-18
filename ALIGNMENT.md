@@ -1,34 +1,33 @@
-# 需求對齊與驗證
+# Always-on 需求對齊與驗證
 
-## 正確入口
+## 使用方式
 
-GitHub 是安裝來源；安裝後 Codex 主對話就是工作入口。使用者正常說話，Main 整合意圖、執行或派原生 Worker、驗收、保存進度並在該對話回報。不另建 inbox、UI、聊天或代理框架，不要求使用者執行 PS1。
+GitHub 只提供安裝包。使用者在既有 Codex 主對話啟用 always-on，直接交付、修改與查看工作；Main 執行、有限派原生子代理、驗收並保存私有意圖。沒有另一個 inbox、對話、UI 或代理框架，內部腳本由 Main 執行。
 
-## 本次修正
+## 喚醒實作修正
 
-- 使用者層 always-on skill，加上可備份、重複執行的 AGENTS.md 規則合併。
-- 桌面版 native heartbeat 綁定目前主對話；CLI Windows 的內部喚醒只恢復已確認 UUID。
-- 啟用、暫停、恢復與任務交付都由 Main 處理，腳本是內部實作。
-- 舊 inbox 腳本保留追溯但退出安裝與日常流程，舊排程停用。
-- 不覆寫既有 MCP、config.toml、認證、其他 skills 或人類意圖。
+先前以 Windows timer 呼叫 exec resume 的設計不適用於正在開著的主對話，實測被 already has an active writer 拒絕。僅允許 cli/exec、拒絕 vscode 來源也是錯誤的判定方式。
 
-## 本機驗證（2026-10-18）
+新版依能力選擇：有 native heartbeat 的客戶端可以使用它；本機 CUI/CLI/IDE 驗證原生 codex queue 後，Windows timer 將 tick 排入已確認 UUID 的既有主對話。原 Codex 繼續持有 writer，保留其模型與權限，不再另起模型或搶 writer。OS 僅提供 timer；原生 queue 是工作交付通道。
 
-- Skill frontmatter 與命名驗證通過，全部新增 PowerShell 語法檢查通過。
-- 安裝到隔離測試目錄，確認原有規則前綴完整保留，第二次安裝內容不變、管理區塊不重複，helper 完整安裝。
-- 本機使用者層安裝成功，原有全域規則備份並合併，客戶端已回傳更新後的 AGENTS 指令。
-- CLI 綁定已知測試 Session，實際執行新的 Wake-Session，確認 thread.started UUID 不變、turn.completed、WAIT 結果保存在同一 transcript。沒有建立新的 Main 或讀取 inbox 來交付新任務。
-- 桌面版 native heartbeat 已由工具回報 ACTIVE，儲存的 target_thread_id 等於安裝對話。此項確認建立與綁定，不冒充已觀察到第一次定時觸發。
-- 舊 Windows inbox 排程已停用。
+安裝器備份並合併使用者 AGENTS 的管理區塊、安裝 self-contained skill，不改 config.toml、MCP、認證或其他 skills。舊 inbox 與桌面測試排程維持停用。
 
-## 仍然存在的客戶端界線
+## 本機證據（2026-10-18）
 
-- 技能及 AGENTS 只能規定行為，喚醒依賴真正可用的 scheduler。
-- 所有新 Codex 可發現使用者技能，不表示所有新聊天會自動取代同一 Main。需在想作 Main 的對話啟用或明確接續。
-- CLI 必須有可靠當前 UUID；無法識別時不能猜最新 Session。互動終端的背景結果即時刷新及同時輸入競態尚未驗證，不能宣稱已解決。若要求畫面內接續，優先使用支援 native heartbeat 的桌面入口。
-- 不同裝置或公司環境仍需本機驗證模型、sandbox、喚醒工具與政策相容性。
-- Teams、Outlook、LINE 等來源或外發通知需另外明確授權，不會因安裝自動掃描或發送。
+- 使用者測試的原對話 source=vscode，當前 UUID 與 cwd 均已從私有紀錄核對。
+- 原生 queue 發送有界 marker，原本仍開著的主對話實際回覆 LIVE_MAIN_QUEUE_OK；同 transcript 記錄完成。
+- 新喚醒腳本發送 tick，原主對話檢查私有狀態並回覆 WAIT，記錄 task_complete。
+- Windows 同 UUID 任務已實際啟動，LastTaskResult=0；該次 tick 在原主對話回覆 WAIT 並完成。此項包含排程、queue ack 與同主對話處理，不只確認註冊。
+- 安裝保留原規則與重複安裝不增生管理區塊已驗證。
+- Active turn 與 outstanding pending tick 的守門檢查通過，兩者都不產生新 queue request。
+- Skill 命名/frontmatter、PowerShell 語法及 Git 來源檢查通過。
 
-## 停用及回復
+## Headless 排程條件
 
-讓 Main 暫停同對話 heartbeat，或停用其綁定的 Windows 任務。安裝器回傳全域規則與既有同名 skill 的備份位置；回復只處理本次管理區塊與同名技能，保留其他設定。私人 Session、意圖、成果與日誌不公開。
+綁定時記錄當前可用的原生 Codex binary（優先 CODEX_CLI_PATH）及明確的原生共享 server endpoint（unix://），僅保存在私有 binding，避免排程的 PATH/環境差異。原生 queue ack 必須包含目標 UUID；若短生命 queue client 在 ack 後保留 console handle，僅結束此次自己建立的 client，不終止既有 server/Main 或 process tree。未取得 ack 不自動重送，保留 pending marker 供核對。
+
+## 邊界
+
+已驗證的是本機支援 native queue 的入口，不是所有版本、OS 或遠端客戶端。Windows helper 需要 PowerShell 7、登入中的使用者、可用 Codex/本地 transport。客戶端關閉、remote endpoint、其他 OS timer 以及分頁 transcript 的 completion 追蹤未全面驗證；不可宣稱無條件通用。pending 無法確認時保守停止排隊，Main 應核對結果後恢復。
+
+模型不因載入技能自動更換。Teams/Outlook、LINE 與外部操作仍依各自明確授權，不自動掃描或發送。實際意圖、Session、IPC、成果及日誌不公開。

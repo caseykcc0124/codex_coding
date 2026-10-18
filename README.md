@@ -17,7 +17,7 @@
 
 ## 喚醒能力
 
-桌面版若提供 native heartbeat，直接綁定啟用時的主對話，後續在該對話接續。CLI-only Windows 可由內部排程恢復已確認的同一 Session UUID；不能據此保證已開啟的終端畫面即時刷新。沒有可用喚醒工具或無法辨識當前 Session 時必須回報，不能假稱 AGENTS.md 自己會醒來。
+桌面版有 native heartbeat 時可綁定主對話。本機 CUI/CLI/IDE 則優先驗證 Codex 原生 queue 能力，以 Windows timer 將喚醒送進正在開著的同一主對話；不再用 exec resume 搶 writer。已實測 0.163.0 的 vscode-source 主對話回覆 marker 與 WAIT。其他 OS timer、關閉/遠端客戶端仍需各自驗證，沒有通用無條件支援的宣稱。
 
 Main 預期 Sol Low，原生 Worker 預期 Luna Low；已開啟對話的實際模型由客戶端決定，載入技能不會自動更換它。保留既有 MCP、Skills、認證與公司政策。Teams/Outlook 需要明確授權及接通來源，沒有預設掃描。
 
