@@ -1,1 +1,1 @@
-這是正式工作的 Codex 原生定時喚醒。Main 讀取本地 .autonomy/INTENT.md 與 STATE.md，只檢查使用者目前指定且已授權來源自上次游標以來的真實變化。若沒有新事件或有效未完成工作，直接 WAIT，不重寫進度、不建立工作、不派 Worker。有真實工作則按優先級做一件可交付事項，必要時指派 Luna 原生 Worker，檢查實際證據，保存 STATE / PROGRESS 並通知完成事項後結束本輪。不使用無限 Goal，不觸碰未授權資源，不重複處理相同事件。
+這是 Windows 工作排程器觸發的有限回合，不是 CLI 原生 Scheduler。使用 scripts/Invoke-Autonomy.ps1 讀取明確授權的本地 inbox、處理一個新事件、恢復指定 Session、驗證成果並保存游標。無事件立即 WAIT；不把 STATE、PROGRESS 或 runtime 當事件。阻塞時保留證據與恢復條件，不重試相同雜湊。不得自行掃描 Teams/Outlook、外發、push、部署或變更排程。
