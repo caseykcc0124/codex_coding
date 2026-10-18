@@ -1,0 +1,7 @@
+.autonomy/work/*.md
+!.autonomy/work/README.md
+.autonomy/inbox/*
+!.autonomy/inbox/README.txt
+*.secret
+.env
+.env.*
