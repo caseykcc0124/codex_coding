@@ -1,20 +1,24 @@
 # Codex Native Autonomy V2.1
 
-原生 Codex Main／Sub-Agent 的極小自主代理 POC，供研究事件輪詢、有限派工、驗收、WAIT 與恢復使用。此公開儲存庫只有一般化範本，沒有公司內部 AGENTS.md、MCP 連線資訊、帳號認證或工作資料。
+以原生 Codex Main Agent 與 Luna Sub-Agent 組成的輕量 Always-on Agent POC。重點是事件輪詢、有限派工、工作證據、WAIT 與恢復，不引入額外後端、UI 或第三方代理框架。
 
-## 下載與安裝
+## 取得與安裝
 
-1. 下載 [完整安裝包](./codex-native-v2.1-poc.zip)，其中包含 13 個檔案（含安裝 Prompt）。
-2. 開啟 [安裝 Prompt](./INSTALL_PROMPT.md)，將「交給 Codex 的指令」貼到**公司核准的 Codex 工作環境**。
-3. 先在專案中做只讀預檢，合併既有專案規則，確認公司全域設定完全不受更動。
-4. 先測試 WAIT、有新事件時單一 Worker 派工、同一事件去重。確認後再由人類決定是否使用原生排程。
+1. 複製這個公開範本儲存庫：`git clone https://github.com/caseykcc0124/codex_coding.git`。
+2. 閱讀 [INSTALL_PROMPT.md](./INSTALL_PROMPT.md)，在**公司核准的 Codex 環境**中將安裝指令交給 Agent。
+3. 安裝 Agent 必須先檢查全域與專案 `AGENTS.md`，只合併 POC 所需的專案層設定，不覆寫公司既有資源與認證。
+4. 在測試工作區完成 WAIT、單一事件派工與再次喚醒去重的三次手動測試；通過後才考慮原生排程。
 
-**模型預期**：Main `gpt-6.1-sol`／low，Worker `gpt-6-luna`／low。能否使用取決於公司實際模型路由與授權，設定檔不等於已成功生效。
+## 模型配置
 
-**操作界線**：安裝包僅含 POC 範本。請勿把公司程式碼、會議、郵件、金鑰、內網 URL 或實際執行時的 `.autonomy/` 工作狀態推送到公開 GitHub。安裝時不啟用無限 Goal，也不自動執行寄信、Teams 傳送、部署或 git push。
+Main 預期 `gpt-6.1-sol`、low；Worker 預期 `gpt-6-luna`、low；最多 2 個原生子代理。實際可用性取決於 Codex 版本、公司模型路由與政策，尚未在公司環境驗證。
 
-## 封存檔完整性
+## 公開與私有資料界線
 
-SHA-256：`26d9aca2f628ccf133a09924dd048c951f3f484c7b1075c6c11b52386dd7388c`
+此公開儲存庫僅保留**一般化 POC 設定範本**，沒有公司內部 AGENTS.md、MCP 位址、認證資料、郵件、Teams 或工作產物。實際運行時的 `.autonomy/work/` 與 `.autonomy/inbox/` 應留在受控工作區，避免推送公開 GitHub。
 
-本 POC 尚未在使用者公司的 Codex／MCP 環境實際執行驗證。
+## 限制
+
+範本中 AGENTS.md 的停止、去重與成本規則只是模型應遵循的軟規則，不構成 Token 的硬預算控制。排程功能依安裝時的 Codex 客戶端能力而定，不應假設已存在。
+
+此儲存庫提供可檢視與複製的來源檔案。另有 ZIP 安裝包在原始對話中提供下載，但**目前未將 ZIP 二進位檔提交至 GitHub**。
