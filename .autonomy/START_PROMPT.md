@@ -1,0 +1,1 @@
+請啟動此工作區的 Codex 原生自主代理 V2.1 POC。先確認是否正確載入 AGENTS.md 與 .codex/config.toml，以及 Main Sol low、Worker Luna low 的真實可用性。保留公司全域設定與核准的 MCP/Skill，不輸出機密。這次只做一輪手動檢查：讀 .autonomy/INTENT.md、STATE.md，查 .autonomy/inbox/ 是否有新事件；沒有就回 WAIT，不派子代理、不持續探索、不建立排程。回報已驗證與尚未驗證項目。
