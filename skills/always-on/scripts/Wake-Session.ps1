@@ -9,6 +9,12 @@ $binding=Get-Content -LiteralPath (Join-Path $runtime 'main-session.json') -Raw|
 if($binding.workspace -ne $Workspace){throw 'Binding workspace mismatch.'}
 try{$lock=[IO.File]::Open((Join-Path $runtime 'main-wake.lock'),'OpenOrCreate','ReadWrite','None')}catch [IO.IOException]{Write-Output 'WAIT: wake active';exit 0}
 try{
+    if(Test-Path -LiteralPath (Join-Path $runtime 'wake-suspended.json')){Write-Output 'SUSPENDED: input/recovery acceptance required';exit 0}
+    $homeRoot=if($env:CODEX_HOME){$env:CODEX_HOME}else{Join-Path $env:USERPROFILE '.codex'}
+    Add-Type -Path (Join-Path $PSScriptRoot 'NativeMainRpc.cs')
+    $native=[NativeMainRpc]::Read((Join-Path $homeRoot 'app-server-control/app-server-control.sock'),$binding.session_id).GetAwaiter().GetResult()|ConvertFrom-Json
+    if($native.error -or !$native.result.thread.status){throw 'Native main health unavailable; no wake queued.'}
+    if($native.result.thread.status.type -ne 'idle'){Write-Output 'WAIT: native main is not idle';exit 0}
     $pendingPath=Join-Path $runtime 'pending-wake.json'
     $pending=if(Test-Path -LiteralPath $pendingPath){Get-Content -LiteralPath $pendingPath -Raw|ConvertFrom-Json}else{$null}
     $active=$false; $seenPending=$false; $pendingComplete=$false

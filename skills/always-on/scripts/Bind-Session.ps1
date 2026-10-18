@@ -19,6 +19,7 @@ if($LASTEXITCODE -ne 0 -or ($queueHelp -join "`n") -notmatch '--thread'){throw '
 $taskName='Codex-Main-'+$SessionId.ToString()
 @{session_id=$SessionId.ToString();workspace=$Workspace;transcript=$sessionFiles[0].FullName;task_name=$taskName;cli=$cli;remote='unix://'}|ConvertTo-Json|Set-Content -LiteralPath $binding -Encoding UTF8
 if(!$NoSchedule){
+    if(Test-Path -LiteralPath (Join-Path $runtime 'wake-suspended.json')){throw 'Prior input regression is unresolved; keep timer suspended until input/recovery acceptance passes.'}
     $runner=Join-Path $PSScriptRoot 'Wake-Session.ps1'
     $shell=(Get-Command pwsh.exe -ErrorAction Stop).Source
     $action=New-ScheduledTaskAction -Execute $shell -Argument "-NoProfile -NonInteractive -WindowStyle Hidden -File `"$runner`" -Workspace `"$Workspace`"" -WorkingDirectory $Workspace
@@ -30,5 +31,17 @@ if(!$NoSchedule){
         if($existing.Actions.Count -ne 1 -or $existing.Actions[0].Execute -ne $shell -or $existing.Actions[0].Arguments -ne $action.Arguments){throw 'Existing task action mismatch; do not overwrite another scheduler.'}
         Enable-ScheduledTask -TaskName $taskName|Out-Null
     }else{Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal|Out-Null}
+    try{
+    $watchName=$taskName+'-Recovery'
+    $watchRunner=Join-Path $PSScriptRoot 'Watch-Main.ps1'
+    $watchAction=New-ScheduledTaskAction -Execute $shell -Argument "-NoProfile -NonInteractive -WindowStyle Hidden -File `"$watchRunner`" -Workspace `"$Workspace`"" -WorkingDirectory $Workspace
+    $watchTrigger=New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) -RepetitionInterval (New-TimeSpan -Minutes 1)
+    $watchSettings=New-ScheduledTaskSettingsSet -MultipleInstances IgnoreNew -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 2)
+    $existingWatch=Get-ScheduledTask -TaskName $watchName -ErrorAction SilentlyContinue
+    if($existingWatch){
+        if($existingWatch.Actions.Count -ne 1 -or $existingWatch.Actions[0].Execute -ne $shell -or $existingWatch.Actions[0].Arguments -ne $watchAction.Arguments){throw 'Recovery task action mismatch.'}
+        Enable-ScheduledTask -TaskName $watchName|Out-Null
+    }else{Register-ScheduledTask -TaskName $watchName -Action $watchAction -Trigger $watchTrigger -Settings $watchSettings -Principal $principal|Out-Null}
+    }catch{Disable-ScheduledTask -TaskName $taskName|Out-Null;throw}
 }
 [pscustomobject]@{SessionId=$SessionId;TaskName=$taskName;Scheduled=(!$NoSchedule)}

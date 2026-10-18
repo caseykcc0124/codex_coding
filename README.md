@@ -24,3 +24,7 @@ Main 預期 Sol Low，原生 Worker 預期 Luna Low；已開啟對話的實際�
 舊 scripts/Submit-AutonomyEvent.ps1、Invoke-Autonomy.ps1、Register-AutonomyTask.ps1 是先前偏離需求的 inbox 路線，僅保留供遷移追溯；不要用它們安裝或啟用新版。停用舊任務後啟用同主對話喚醒，不能兩套同時運作。
 
 實際意圖、狀態、Session、成果與日誌僅留本地，不上傳公開 Git。
+
+## 輸入可靠性修正
+
+使用者回報 Running hook 卡死後，先前僅憑 transcript 判定可用的結論已修正。新版增加原生健康守門、輸入驗收與有界 setup 超時監控；實際處置、測試及未驗證界線見 [RECOVERY.md](RECOVERY.md)。不能把 queue 成功當作完整自主性。
