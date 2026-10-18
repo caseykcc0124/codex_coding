@@ -1,4 +1,8 @@
-.autonomy/work/*.md
+# Work state belongs only to the authorized local environment
+.autonomy/INTENT.md
+.autonomy/STATE.md
+.autonomy/PROGRESS.md
+.autonomy/work/*
 !.autonomy/work/README.md
 .autonomy/inbox/*
 !.autonomy/inbox/README.txt
