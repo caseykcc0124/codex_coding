@@ -1,5 +1,7 @@
 # KA-DMM：下一輪執行指引（P0-R1、P0-R2、P0-R3）
 
+> **已由 [v1.2 收斂交付版](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 取代。請勿再使用 v1.1 作為新 WorkItem 的執行依據。**
+
 > 文件版本：v1.1（本輪完整正式執行規格；v1.0 已被取代）  
 > 日期：2026-11-06  
 > 主計畫：[KA-DMM Docling Native Migration v1.2](./KA_DMM_Docling_Native_Migration_Plan_v1.2.md)  
