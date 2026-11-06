@@ -1,5 +1,7 @@
 # KA-DMM：Knowledge Agent 文件模型遷移與 DS 淘汰計畫
 
+> **下一輪工作指引（2026-11-06）**：第一輪 P0、P0-U、M0、M1 已回報 Gate 全部 BLOCKED。下一輪只能執行 [P0-R1／R2／R3 Blocker Resolution v1.0](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.0.md) 所定義的基準複查、補充探測與架構裁決；未獲下一次明確核准前不得進 M2。此連結為公開指令，執行證據與私有資料保留於 KA 本地專案。
+
 > **文件版本**：v1.2  
 > **規劃日期**：2026-11-06  
 > **適用專案**：現有 `knowledgeAgent` Repository  
