@@ -1,6 +1,8 @@
 # KA-DMM：Knowledge Agent 文件模型遷移與 DS 淘汰計畫
 
-> **下一輪工作指引（2026-11-06）**：第一輪 P0、P0-U、M0、M1 已回報 Gate 全部 BLOCKED。下一輪只能執行 [P0-R1／R2／R3 Blocker Resolution v1.1](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.1.md) 所定義的基準複查、補充探測與架構裁決；未獲下一次明確核准前不得進 M2。此連結為公開指令，執行證據與私有資料保留於 KA 本地專案。
+> **執行策略修訂（2026-11-06）**：針對原 P0/M0/M1 Gate 導致的整體停滯，最新 [交付收斂指引 v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 明文准許在 R0 與隔離 Gate 通過後，建立一條不依賴 DS 的 M2-V0 Shadow 垂直切片。其他格式仍可維持 BLOCKED，**這不代表正式 M2、DB/Index 或部署已獲准**。在本次新增的隔離 M2-V0 授權與舊 Gate 有衝突時，以此版明文的有限准入條件為準。對已在途的 Coding Agent 工作不追溯重做，於下一個明確指令交接點採用。
+
+> **下一輪工作指引（2026-11-06）**：第一輪 P0、P0-U、M0、M1 已回報 Gate 全部 BLOCKED。下一輪只能執行 [P0-R1／R2／R3 + M2-V0 可用切片 v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 所定義的基準複查、補充探測與架構裁決；未獲下一次明確核准前不得進 M2。此連結為公開指令，執行證據與私有資料保留於 KA 本地專案。
 
 > **文件版本**：v1.2  
 > **規劃日期**：2026-11-06  
