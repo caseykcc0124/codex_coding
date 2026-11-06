@@ -1,5 +1,7 @@
 # KA-DMM：Knowledge Agent 文件模型遷移與 DS 淘汰計畫
 
+> **此版本已由 v1.2 取代。最新版本：** [KA-DMM v1.2（含官方 Docling 上游鬆耦合與版本升級 Gate）](./KA_DMM_Docling_Native_Migration_Plan_v1.2.md)。請勿再以 v1.1 作為 Coding Agent 的執行基準。
+
 > **文件版本**：v1.1  
 > **規劃日期**：2026-11-06  
 > **適用專案**：現有 `knowledgeAgent` Repository  
