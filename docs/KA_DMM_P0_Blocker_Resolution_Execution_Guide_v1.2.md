@@ -1,5 +1,7 @@
 # KA-DMM：交付收斂指引（R0、P0-R1／R2／R3、M2-V0）
 
+> **最新後續執行指令已移至 [M2-V0 v1.3](./KA_DMM_M2_V0_Delivery_Execution_Guide_v1.3.md)。此 v1.2 保留作歷史與既有 R 工作驗收依據，新 M2-V0 WorkItem 以 v1.3 為準。**
+
 > 文件版本：v1.2（交付收斂修訂，取代 v1.1）  
 > 日期：2026-11-06  
 > 主計畫：[KA-DMM Docling Native Migration v1.2](./KA_DMM_Docling_Native_Migration_Plan_v1.2.md)  
