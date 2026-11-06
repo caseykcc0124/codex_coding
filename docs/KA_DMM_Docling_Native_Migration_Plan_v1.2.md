@@ -1,8 +1,8 @@
 # KA-DMM：Knowledge Agent 文件模型遷移與 DS 淘汰計畫
 
-> **執行策略修訂（2026-11-06）**：針對原 P0/M0/M1 Gate 導致的整體停滯，最新 [交付收斂指引 v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 明文准許在 R0 與隔離 Gate 通過後，建立一條不依賴 DS 的 M2-V0 Shadow 垂直切片。其他格式仍可維持 BLOCKED，**這不代表正式 M2、DB/Index 或部署已獲准**。在本次新增的隔離 M2-V0 授權與舊 Gate 有衝突時，以此版明文的有限准入條件為準。對已在途的 Coding Agent 工作不追溯重做，於下一個明確指令交接點採用。
+> **最新正式執行指引（2026-11-06）**：[KA-DMM M2-V0 無 DS 原生路徑交付 v1.3](./KA_DMM_M2_V0_Delivery_Execution_Guide_v1.3.md)。前輪 P0-R 的本地報告維持原裁決；R0 已有基準證據，R1/R2/R3 未解項以來源類型隔離。**本輪已明文授權獨立 M2-V0 Shadow 垂直切片，無須等待全部格式缺口解決；不得更動正式 DS、DB、Index、服務或正式依賴。** 本指令覆蓋本主計畫較舊的「R 全部通過前不能開始任何 M2」限制，但**僅限 M2-V0 隔離實作**。所有正式 M2 後續批次與生產變更仍需單獨授權。
 
-> **下一輪工作指引（2026-11-06）**：第一輪 P0、P0-U、M0、M1 已回報 Gate 全部 BLOCKED。下一輪只能執行 [P0-R1／R2／R3 + M2-V0 可用切片 v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 所定義的基準複查、補充探測與架構裁決；未獲下一次明確核准前不得進 M2。此連結為公開指令，執行證據與私有資料保留於 KA 本地專案。
+> **交接紀錄**：舊版 [P0-R v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 留作歷史與已完成 R 工作依據；下個新 WorkItem 請以 v1.3 的 URL 和實際 Commit 固定執行，私有測試證據留在本地 KA。
 
 > **文件版本**：v1.2  
 > **規劃日期**：2026-11-06  
