@@ -1,8 +1,8 @@
 # KA-DMM：Knowledge Agent 文件模型遷移與 DS 淘汰計畫
 
-> **最新正式執行指引（2026-11-06）**：[KA-DMM M2-V0 無 DS 原生路徑交付 v1.3](./KA_DMM_M2_V0_Delivery_Execution_Guide_v1.3.md)。前輪 P0-R 的本地報告維持原裁決；R0 已有基準證據，R1/R2/R3 未解項以來源類型隔離。**本輪已明文授權獨立 M2-V0 Shadow 垂直切片，無須等待全部格式缺口解決；不得更動正式 DS、DB、Index、服務或正式依賴。** 本指令覆蓋本主計畫較舊的「R 全部通過前不能開始任何 M2」限制，但**僅限 M2-V0 隔離實作**。所有正式 M2 後續批次與生產變更仍需單獨授權。
+> **目前最新可執行工作指引（2026-11-07）**：[KA-DMM M2-V1：DCLX Native Import v1.4](./KA_DMM_M2_V1_DCLX_Native_Import_Execution_Guide_v1.4.md)。**M2-V0 已由使用者回報驗收與獨立審查 PASS**，完整成果保留在本地 KA；下一批僅新增 DCLX 輸入與來源保真能力，重用 V0 的 JSON／Assets 保存、Chunk、local retrieval、回退與測試。M2-V1 的獨立 Shadow 實作已獲本指引明文授權，**不必等待其他 Office／正式 RAG／DB 恢復等不相關 Gate 清零**。本次明文例外僅限 M2-V1 的隔離程式與測試，正式 DS、DB、Index、服務、依賴升級及部署仍禁止。
 
-> **交接紀錄**：舊版 [P0-R v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 留作歷史與已完成 R 工作依據；下個新 WorkItem 請以 v1.3 的 URL 和實際 Commit 固定執行，私有測試證據留在本地 KA。
+> **歷史交接**：[M2-V0 v1.3](./KA_DMM_M2_V0_Delivery_Execution_Guide_v1.3.md) 已完成且保留作基準；[P0-R v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md) 與更早主計畫 P0 禁入 M2 的語句僅適用當時工作，不得阻止這次明文授權的**隔離 M2-V1**。下一輪 Coding Agent 以 v1.4 的實際 GitHub Commit 為正式指令版本，內部執行證據僅留在本地 KA。
 
 > **文件版本**：v1.2  
 > **規劃日期**：2026-11-06  
