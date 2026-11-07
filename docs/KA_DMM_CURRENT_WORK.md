@@ -20,6 +20,19 @@
 
 公開 GitHub 一般 Repo 不得直接當作未審查第三方大型二進位套件倉庫。二進位交付必須先驗 license、hash 和可用傳輸通道；來源清單或 README 不能代替真正 offline rebuild PASS。不准私自繞過網路限制、發布受限 wheel 或執行 E10。
 
+## E9 Windows CPython 3.12 Wheelhouse：GitHub Actions 交接
+
+18 項公開 PyPI 缺失 Wheel 已有精確下載清單，並新增受控 GitHub Actions 工作流程：
+
+* [Exact 18 requirements](./KA_DMM_E9_Offline_Wheels_Requirements.txt)
+* [Wheel verification script](./ka_dmm_tools/verify_public_pypi_wheels.py)
+* [GitHub Actions workflow](../.github/workflows/ka-dmm-e9-wheelhouse.yml)
+* [Workflow Runs 與下載頁面](https://github.com/caseykcc0124/codex_coding/actions/workflows/ka-dmm-e9-wheelhouse.yml)
+
+此 Workflow 以 `windows-2022`、CPython 3.12，從公開 PyPI 精確下載 18 個原始 Wheels，不允許自動替代版本，核對官方 PyPI wheel 原始 SHA256 後才上傳 `ka-dmm-e9-18-wheels-cp312-win-amd64` Artifact。**工作流程已提交不等於實際執行成功或檔案已交付**，Main 必須查實 run status、Artifact、18 個 wheel、manifest 與雜湊。若 Workflow 失敗，記錄公開可去敏根因與最小下一步，持續其他 E9 工作。
+
+Main 在已授權環境取得已驗證 Artifact，合併原有本地 66 個 wheels，真實執行 `--no-index` clean offline install 與 PDF→Review→Approval→Index→Serving，存下安裝與 Gate receipts。只有真正下載、SHA、清潔重建與既定測試完成才解除 offline Gate。不得將 artifacts 當成 Production 部署授權，亦不得把公司檔案或私有原件推送到公開 Repository。
+
 ## 強制狀態同步
 
 **本總任務執行期間，Main Agent 必須把去敏進度更新至公開 Repository 根目錄的 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。**
