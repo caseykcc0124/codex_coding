@@ -8,17 +8,17 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T11:09:40Z |
-| last_progress_at_utc | 2026-11-07T11:09:40Z |
+| updated_at_utc | 2026-11-07T11:48:53Z |
+| last_progress_at_utc | 2026-11-07T11:48:53Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | Office引用定位遺失已修復並獨立覆核；新successor RC執行CI與50回歸，170欄必要契約收斂中 |
-| stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
+| current_work_item | 新RC最終CI執行中；原50回歸49/1維持；新portable離線安裝PASS，170欄與交付包驗收中 |
+| stage_gate | SUCCESSOR_CI_RUNNING / PORTABLE_INSTALL_PASS / FINAL_ACCEPTANCE_PENDING |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
-| release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
+| release_commit | fb1aa0e6dc9da4fedcd285ea2471dff230f862ad |
 | next_action | 新RC實跑22 CI與原50回歸，完成170欄責任判定與新發行包，不啟動E10 |
 | requires_user_action | NO_FOR_CURRENT_LOCAL_WORK |
 | user_action_summary | 目前隔離工程可繼續；E10未授權，代表性正式RAG品質仍需另具條件 |
@@ -281,3 +281,18 @@ Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a467
 本地私人離線補充包已實際產製並獨立讀回：209個payload／210個ZIP members，98個API wheels、84個PDF wheels、14個sealed模型；全部hash、hashlocks、tags與原RC ZIP相符。補充ZIP SHA256 `ab54c22a0a8f9276c0344dd385fa3a5b425b3dff690c8f0b869981cf17206934`。此包保留原RC54745fd，並非新successor發行包。verify-only實跑PASS；新portable installer完整安裝仍NOT_TESTED。操作必須明確指定verify或install，無參數拒絕；manifest checksum sidecar在ZIP外層，須連同內部交付。私人包與模型未傳公開Repository。
 
 原PPTX digest FAIL保留、Golden不改；新版有界source-truth契約與舊身份雜湊差異分開判定，不把舊50宣為全綠。真實corpus/live RAG品質、任意歷史映射與其他必要契約仍分開追蹤，整體保持NOT_READY，E10未動。
+
+
+## 新候選版最終驗收進度
+
+最終產品commit `fb1aa0e6dc9da4fedcd285ea2471dff230f862ad` 包含Office來源定位修復，以及Review標題／清單投影修復。實際官方模型到Review DTO、renderer與本機Chrome檢查PASS；就地編輯仍保存原文字，不把顯示標記写入母本。canonical JSON、Evidence IDs、來源定位與fingerprints保留。原RC與歷次失敗證據不變。
+
+新commit原50回歸actual exit1，49 PASS／1同原PPTX digest FAIL，test IDs與三Golden hashes一致，沒有新增失敗。限定native source-truth已PASS；舊digest失敗保留，不宣舊50全綠。新commit實際CI job已啟動，目前19/22 PASS、尚未完成，不沿用上文舊RC 22PASS當新RC結果。
+
+私人依賴補充包的完整離線installer第二次actual exit0，短本機root建立全新API／PDF profiles，pip check PASS；98與84套件版本逐項符合locks。第一次深路徑torch header安裝失敗保留，短路徑成功不代表無上限Windows路徑支援。用新profiles的真PDF→Review→Approval→Index→Serving驗證正在執行，尚未報PASS。依賴包內source是原RC備份，新產品由另建source ZIP提供。
+
+170欄按已批准native契約逐欄收斂，四個舊parser統計已批准廢棄，其他legacy scalar由native／Office／治理composites承接；不宣任意舊值全parity。新表仍待Main驗收，原29 R1 unresolved保留，不能把無法唯一映射的歷史轉成Verified。
+
+交付包盤點906個Git source/test files與16個描述檔，最終freeze／ZIP及獨立讀回尚待CI、欄位與Main Gate。獨立Viewer的126個既有資產SHA逐項符合原inventory，但資產不在Python依賴包／source包；外部file-preprocessor亦為獨立共同服務，包內僅client與設定。部署文件明列共同服務先決條件，新host／正式共同服務部署不宣PASS。
+
+整體仍NOT_READY。下一步完成新CI、portable真flow、170欄契約、最終包與逐Gate判定。真corpus／live RAG／正式規模品質仍NOT_TESTED，E10未授權。本次僅Chrome線上編輯去敏摘要。
