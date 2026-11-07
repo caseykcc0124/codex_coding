@@ -1,0 +1,55 @@
+name: KA-DMM E9 public offline wheelhouse
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ka-dmm-e9-wheelhouse.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  collect-and-verify-public-wheels:
+    name: Official PyPI wheels for CPython 3.12 Windows x64
+    runs-on: windows-2022
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: x64
+      - name: Fetch 18 exact public wheels without dependencies
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          New-Item -ItemType Directory -Force -Path wheelhouse | Out-Null
+          python -m pip download --no-deps --only-binary=:all: -r docs/KA_DMM_E9_Offline_Wheels_Requirements.txt -d wheelhouse
+          if ($LASTEXITCODE -ne 0) { throw "Exact PyPI wheel download failed; no substitution allowed." }
+      - name: Compare each downloaded wheel against official PyPI SHA256
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          python docs/ka_dmm_tools/verify_public_pypi_wheels.py --requirements docs/KA_DMM_E9_Offline_Wheels_Requirements.txt --wheelhouse wheelhouse --output wheelhouse/verified_pypi_manifest.json
+          if ($LASTEXITCODE -ne 0) { throw "Official PyPI artifact validation failed." }
+          Copy-Item docs/KA_DMM_E9_Offline_Wheels_Requirements.txt wheelhouse/locked_missing_requirements.txt
+          @'
+          This public artifact contains ONLY the 18 requested public PyPI wheel files.
+          All bytes are compared to official PyPI SHA256 metadata (see manifest).
+          Target: CPython 3.12 Windows x64. Internal RC: 54745fd733e52744c9b5728bcbbc91d337ecdbbc.
+          This is not the original 84-wheel offline lock: the 66 existing wheels remain local.
+          The Coding Agent must validate wheel metadata/license on receipt, merge with the
+          approved 66 local files, then run entirely offline installation and the E9
+          PDF/Review/Approval/Index/Serving Gate. No Production cutover is authorized.
+          '@ | Set-Content -Encoding utf8 wheelhouse/README.txt
+      - name: Upload only if all official wheel checks passed
+        uses: actions/upload-artifact@v4
+        with:
+          name: ka-dmm-e9-18-wheels-cp312-win-amd64
+          path: wheelhouse/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
