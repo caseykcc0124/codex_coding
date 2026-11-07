@@ -11,3 +11,7 @@ Work toward M0–M7 in `docs/06_IMPLEMENTATION_ROADMAP.md`. Use `docs/07_ACCEPTA
 No unapproved external publication, creation of public repositories, expansion of user scopes, increasing budgets, changing quality gates, or installing unrelated infrastructure.
 
 Always respond in Traditional Chinese, including verified state, commit, test counts, evidence paths / hashes, blockers, risks, required approval, and next executable work.
+
+## Mandatory v3.1 Parallel Exploration
+
+Before implementing, read `docs/12_PARALLEL_EXPLORATION_ARCHITECTURE.md`, `docs/13_PARALLEL_EXPLORATION_ACCEPTANCE.md`, `docs/14_PARALLEL_EXPLORATION_IMPLEMENTATION.md`, and `config/exploration.yaml`. A Domain Role is not a singleton Owner Instance; multiple instances may run concurrently per requirement on different branch-scoped Git worktrees. Preserve parent/child branch lineage, trusted routing, candidate-scoped EDA evidence and post-merge re-gating. Implement M1X/M3X/M6X within the existing M0–M7 plan. There are **78 required cases** (A01–D12 and E01–E20). Never report mock results as actual EDA or claim mainline completion without merged-commit verification. Do not create a separate project.
