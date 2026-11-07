@@ -14,6 +14,7 @@
 | updated_at_utc | NOT_SET |
 | updated_at_taipei | NOT_SET |
 | instruction_version | v2.0 |
+| chatgpt_monitor_state | PENDING_AUTOMATION_CAPACITY |
 | instruction_commit | NOT_SET |
 | mission_state | NOT_STARTED |
 | active_stage | E0 |
