@@ -4,11 +4,11 @@
 
 請先讀 `README.md`，再讀 `docs/00_MISSION_AND_BOUNDARIES.md`、`docs/07_ACCEPTANCE_MATRIX.md`、`docs/08_CODING_AGENT_WORK_ORDER.md`，接著讀 `docs/01` 至 `docs/06` 與 `docs/10`。
 
-現階段你接手的是 v3.0 正式設計基準與可運作的 A0 參考原型。**不是完成的產品**。請不要只跑 25 個參考測試就宣稱交付成功。
+現階段你接手的是 v3.1 正式設計基準與可運作的 A0 參考原型。**不是完成的產品**。請不要只跑 25 個參考測試就宣稱交付成功。
 
 立即執行：
 
-1. 讀取所有規格與 58 項 Acceptance Cases。
+1. 讀取所有規格與 78 項 Acceptance Cases。
 2. 執行 `python -m pytest -q tests`，保存真實輸出與工具版本。
 3. 檢查 `reference/runtime.py` 和 `reports/REFERENCE_TEST_REPORT.md` 已知差距。
 4. 建立正式 M0 Schema／Policy／Repo Structure，開發真正 Event Runtime M1，補上 Transactional Outbox、Identity 驗證、Lease Fencing 與跨程序 Restart。
