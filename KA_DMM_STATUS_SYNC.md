@@ -8,21 +8,21 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T12:23:34Z |
-| updated_at_taipei | 2026-11-07T20:23:34+08:00 |
-| last_progress_at_utc | 2026-11-07T12:23:34Z |
-| instruction_version | v2.0 / E9 Final Closure |
-| instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
+| updated_at_utc | 2026-11-07T15:12:23Z |
+| updated_at_taipei | 2026-11-07T23:12:23+08:00 |
+| last_progress_at_utc | 2026-11-07T15:12:23Z |
+| instruction_version | v2.0 / E10 |
+| instruction_commit | 420968aa03b372aebfeaf9a1187702b14d9d5fac |
 | mission_state | ENGINEERING_COMPLETE |
-| active_stage | E9_COMPLETE_AWAITING_PRODUCTION_ACCEPTANCE |
-| current_work_item | 凍結RC、離線依賴、170欄契約、最終UI與私有ZIP獨立驗收完成 |
-| stage_gate | READY_FOR_RELEASE / PRODUCTION_ACCEPTANCE_PENDING / E10_NOT_AUTHORIZED |
+| active_stage | E10_PRODUCTION_READINESS |
+| current_work_item | E10.1 非正式環境準備；資源清冊、固定品質矩陣、切換回復附件已整理 |
+| stage_gate | E10.1_NOT_READY_CONFIGURATION / E9_READY_FOR_RELEASE |
 | engineering_release_status | READY_FOR_RELEASE |
 | production_status | NOT_AUTHORIZED |
 | release_commit | fb1aa0e6dc9da4fedcd285ea2471dff230f862ad |
-| next_action | 依配套runbook完成正式品質與共同服務配置驗收；未授權前不執行E10 |
-| requires_user_action | NO_FOR_E9; SEPARATE_AUTHORIZATION_REQUIRED_FOR_E10 |
-| user_action_summary | 本輪E9隔離工程已完成。正式資料、品質條件與E10切換另行確認；不自動部署 |
+| next_action | 補齊正式資源、核准操作程序與SLO；之後形成一次具體授權請求，禁止正式寫入 |
+| requires_user_action | CONFIGURATION_AND_OPERATOR_DECISION_REQUIRED; PRODUCTION_NOT_AUTHORIZED |
+| user_action_summary | 需要明確正式資源、操作者/窗口、品質基準/SLO及備份/重播/CAS程序；不是請求立即全量切換 |
 
 ## 階段判定
 
@@ -335,3 +335,17 @@ Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a467
 仍未測的正式條件包括代表性真corpus／live LLM RAG relevance與groundedness、正式規模效能及共同服務新host／正式健康驗收。這些與已完成工程分開，不用合成embedding推論正式品質。Windows長路徑、原PPTX舊身份digest、任意legacy映射與optional parser profiles維持明列的有界限制，不承諾全相容。
 
 本輪沒有剩餘release-critical本機工程項，停止E9心跳，等待後續正式驗收／E10的新授權。沒有建立新的背景監聽或自動部署。本檔只經使用者Chrome線上編輯與固定commit Raw全文讀回同步。
+
+
+## E10.1 續接與準備結果
+
+CURRENT_WORK commit為bf6c500bf74847ed00ae1c67e46eb7f90b3e0281，E10指令commit為420968aa03b372aebfeaf9a1187702b14d9d5fac。Main已實際閱讀兩份原文，延用凍結RC，沒有重開E9、新增測試或正式資源操作。
+
+本輪實測dependency verify-only PASS，API98/PDF84/14models、210 ZIP members身份一致，未重新安裝。產品ZIP、profile、manifest、E9最終Gate雜湊與既有基線相同。依賴ZIP內舊RC source只是歷史備份，不是正式產品。
+
+私有清冊、固定Production acceptance矩陣、G0至G6及rollback附件已整理。正式品質、共同服務健康、備份恢復、consumer inventory均NOT_TESTED。隔離SQLite遷移CLI與local lifecycle store不能冒充正式PostgreSQL/Index操作器。
+
+E10.1仍NOT_READY，缺具體正式資源/最低權限、operator/window、backup/restore/replay與CAS/routing命令、corpus/M0、latency/error/觀察期及RPO/RTO。只讀Shadow也可能寫獨立索引，需明列授權。正式寫入比例目前0%，禁止Alias切換及DS不可逆清理。先完成可審閱具體附件，再提出一次整合授權請求，不要求使用者逐步批准。
+
+工程仍ENGINEERING_COMPLETE / READY_FOR_RELEASE，Production NOT_AUTHORIZED，不能宣稱E10.1 Ready或PRODUCTION_COMPLETE。既有PPTX digest FAIL、未解legacy、短路徑及外部服務限制保留。此更新不取代上方E9歷史證據。
+
