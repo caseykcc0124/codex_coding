@@ -8,18 +8,18 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T08:22:41+00:00 |
-| last_progress_at_utc | 2026-11-07T08:22:41+00:00 |
+| updated_at_utc | 2026-11-07T08:44:19+00:00 |
+| last_progress_at_utc | 2026-11-07T08:44:19+00:00 |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 最終 RC 已凍結；交付封裝與完整 Gate 判定 |
+| current_work_item | 發布精確 wheel 交接 manifest；持續 PPTX 根因與 lineage 欄位驗證 |
 | stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
 | release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
-| next_action | 關閉欄位契約／驗證缺口、取得核准離線依賴與真實品質驗收條件 |
+| next_action | 外部先核18件精確PyPI版本與Windows tags／license／SHA；Main持續無依賴內部工作 |
 | requires_user_action | YES_FOR_EXTERNAL_RELEASE_INPUTS |
 | user_action_summary | 解除完整發布需核准的離線套件來源及代表性品質驗收資料；內部欄位歸屬仍由工程處理，E10另行授權 |
 
@@ -67,3 +67,261 @@ Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載�
 
 沒有公開公司程式、原件、私人路徑、內部logs或憑證。本檔只透過國基Chrome線上編輯與Raw全文讀回同步，不使用git／push／檔案上傳。E10正式操作仍需另行核准。
 
+## E9 PUBLIC WHEEL REQUEST
+
+依 CURRENT_WORK commit `17865fba6779572088f637ed6e08445621ae399e` 與 wheel handoff commit `58856056533721762d2e6775c699b48b9eeab15e` 執行。以下只公開開源 distribution 身份、保存的精確版本與相容 tags；沒有內部路徑、index、憑證或文件。18個專案身份已有本地metadata證據，但18個精確版本是否公開發布仍未核實。此清單是外部核實及取得請求，不表示已下載、已取得授權或已完成offline rebuild。
+
+```json
+{
+  "wheel_request_version": 1,
+  "release_commit": "54745fd733e52744c9b5728bcbbc91d337ecdbbc",
+  "wheel_request_state": "READY_FOR_EXTERNAL_PUBLIC_SOURCE_VERIFICATION",
+  "target_python": "CPython 3.12",
+  "target_platform": "win_amd64",
+  "target_abi": "per-wheel: cp312, abi3, or none; see filename_or_tags",
+  "missing_count": 18,
+  "required_runtime_count": 15,
+  "exact_profile_extra_count": 3,
+  "verified_public_exact_version_count": 0,
+  "private_or_unpublished_count": "UNKNOWN",
+  "offline_wheel_gate": "BLOCKED_EXTERNAL",
+  "public_wheels": [
+    {
+      "name": "accelerate",
+      "version": "1.15.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "docling-ibm-models",
+      "version": "4.0.3",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "docling-parse",
+      "version": "7.22.2",
+      "filename_or_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "filelock",
+      "version": "4.1.1",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "hf-xet",
+      "version": "1.7.0",
+      "filename_or_tags": [
+        "cp38-abi3-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "huggingface-hub",
+      "version": "1.33.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "markupsafe",
+      "version": "3.0.4",
+      "filename_or_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "pandas",
+      "version": "3.0.6",
+      "filename_or_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "pip",
+      "version": "23.2.1",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "EXACT_PROFILE_EXTRA",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "pypdf",
+      "version": "6.20.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "EXACT_PROFILE_EXTRA",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "soupsieve",
+      "version": "3.0.2",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "EXACT_PROFILE_EXTRA",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "torch",
+      "version": "2.14.1",
+      "filename_or_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "torchvision",
+      "version": "0.29.1",
+      "filename_or_tags": [
+        "cp312-cp312-win_amd64"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "transformers",
+      "version": "5.19.0",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.5",
+      "filename_or_tags": [
+        "py3-none-any"
+      ],
+      "category": "RUNTIME_REQUIRED",
+      "expected_sha256": "UNKNOWN",
+      "source": "Official PyPI; exact release must be verified",
+      "redistributable": "UNKNOWN",
+      "exact_version_publication": "UNKNOWN",
+      "blocking_reason": "No original compatible wheel in the completed authorized local inventory; public exact-version availability and original wheel hash are not yet verified"
+    }
+  ]
+}
+```
+
+沒有原始 wheel filename 或已驗 SHA，所以保留 UNKNOWN；不能用 RECORD hash 代替 wheel hash。`hf-xet` 的 `cp38-abi3-win_amd64` 可供 CPython3.12；`py3-none-any` 是純Python wheel，不能一律改成cp312。協作端先核官方PyPI精確版本、Requires-Python、tags、license與實際SHA；若精確版本不存在，明確回報，禁止替版。GitHub一般Repo不作未審查大型二進位庫，實際交付另核准傳輸通道。只有收到原始wheels並完成全新offline install及PDF既定Gate，才能解除BLOCKED_EXTERNAL。私有metadata來源證據只留本地。
