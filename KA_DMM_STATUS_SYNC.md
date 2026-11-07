@@ -8,18 +8,18 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T09:28:21.260Z |
-| last_progress_at_utc | 2026-11-07T09:28:21.260Z |
+| updated_at_utc | 2026-11-07T09:38:53.894Z |
+| last_progress_at_utc | 2026-11-07T09:38:53.894Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 18件官方精確wheel已下載並驗SHA與tags；隔離PDF clean rebuild進行中 |
+| current_work_item | 18件官方wheel取得及84套件offline install通過；真PDF入庫到Serving限定驗證PASS |
 | stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
 | release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
-| next_action | 使用新取得wheels重建全新offline PDF runtime，驗既定端到端Gate |
+| next_action | 維持RC凍結；收斂PPTX版本契約、欄位歸屬與代表性RAG品質等剩餘Gate |
 | requires_user_action | YES_FOR_EXTERNAL_RELEASE_INPUTS |
 | user_action_summary | 套件下載不需使用者代辦；代表性品質驗收資料與E10授權仍另處理 |
 
@@ -55,7 +55,7 @@ Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載�
 
 ## 尚未關閉的發布條件
 
-- 封存PDF既有真parser流程已通過。18件缺失的精確wheel現已從官方PyPI取得並驗SHA256、METADATA、Requires-Python與tags；全新offline rebuild及既定PDF Gate仍在驗證，尚未宣稱通過。
+- 封存PDF既有真parser流程已通過。18件缺失的精確wheel現已從官方PyPI取得並驗SHA256、METADATA、Requires-Python與tags；全新84套件offline install與pip check均exit0，user site disabled；真PDF解析、Review、核准、Index與Serving限定驗證PASS。metadata/embedding使用合成資料，不宣live RAG品質。
 - 170欄最終j1責任矩陣保留19具名bounded assertions、151未逐欄歸屬、29 R1 unresolved、0完整legacy parity認證；補31項限定證據候選，另120尚無此輪個別歸屬。這些不是151個已確認壞功能，也不能全轉成IT需求。
 - 真實代表性corpus／live LLM／RAG relevance與groundedness、正式規模效能未測。合成embedding／fail-closed反例不能替代品質驗收。
 - 原PPTX digest失敗仍未解除。Windows深圖片路徑原FAIL保留，短路徑控制PASS不代表無上限相容。
@@ -69,7 +69,7 @@ Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載�
 
 ## E9 官方wheel取得結果
 
-使用者已授權Main直接下載。18個精確版本均由官方pypi.org release metadata與files.pythonhosted.org取得，未替版、未重包site-packages。全部實際wheel SHA256重核一致，名稱、版本、頂層METADATA/WHEEL、Requires-Python與指定tags驗證通過。共175448802 bytes，其中15件runtime必備、3件exact profile額外。license宣告已記錄，這項結果不等於完成整包再散布審核或PDF clean rebuild。
+使用者已授權Main直接下載。18個精確版本均由官方pypi.org release metadata與files.pythonhosted.org取得，未替版、未重包site-packages。全部實際wheel SHA256重核一致，名稱、版本、頂層METADATA/WHEEL、Requires-Python與指定tags驗證通過。共175448802 bytes，其中15件runtime必備、3件exact profile額外。license宣告已記錄，license宣告的記錄不等於整包再散布核准；PDF重建的追加實測如下。
 
 ```json
 {
@@ -78,7 +78,7 @@ Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載�
   "target_platform": "win_amd64",
   "verified_public_exact_version_count": 18,
   "missing_count": 0,
-  "offline_install_gate": "IN_PROGRESS_NOT_YET_PASSED",
+  "offline_install_gate": "PASS_OFFLINE_CLEAN_INSTALL_84",
   "public_wheels": [
     {
       "name": "accelerate",
@@ -256,3 +256,9 @@ PPTX digest 已在固定來源上重現，parser／planner身份版本與recipe�
 10個parser lineage欄位補上owner／consumer與實證歸屬，另實跑1正向control、5個parser/package/recipe/weights篡改反例，現有pinned recipe/package與bound prepared manifest路徑拒絕變更。完整自洽重封存資料可通過raw bundle結構／checksum驗證，原bound manifest digest則拒絕它；不把這項當獨立核准模型政策通過。模型內容讀取、網路與DS均為0，RC/profile/原j1證據未變，170parity仍未完成。
 
 Main已讀實際receipt／exit code並核對RC未變。上述只是追加限定證據，不重封原RC、不改Golden、不更新已pin部署profile，也不啟動E10。上方18件官方取得實證取代先前外部代辦假設；offline重建結果另行驗收。
+
+## 官方套件離線重建驗收
+
+全新Windows CPython3.12隔離venv安裝84件hash-locked原始wheel，pip使用no-index與require-hashes。建立、安裝、pip check與身份核對四個程序均exit0；84件installed identity吻合、user site disabled、所有site-packages位於新venv。
+
+新PDF環境完成一次真parser、Review、核准與Index流程，產生3個chunks與1張頁面圖片。Serving真ASGI路由核對未登入拒絕、raw／map同有效revision、圖片讀取與錯誤hash拒絕，共4項檢查PASS。API使用既有clean98環境，PDF subprocess使用新clean84環境；資料庫為隔離SQLite語法adapter、metadata與embedding合成。這解除原18wheel取得與這項clean PDF重建卡點，不代表整體170parity、live RAG品質、正式PostgreSQL或E10已通過。RC/profile/舊ZIP未改。
