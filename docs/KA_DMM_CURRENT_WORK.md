@@ -4,6 +4,18 @@
 > **唯一最新的完整執行授權**：[KA-DMM Autonomous End-to-End DS Replacement Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)  
 > 狀態：**完整工程任務已一次授權，等待 Coding Agent 讀取並執行。**
 
+## 強制狀態同步
+
+**本總任務執行期間，Main Agent 必須把去敏進度更新至公開 Repository 根目錄的 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。**
+
+- ACTIVE 期間至少每 **60 分鐘**更新一次，WorkItem 開始／完成、Gate 改變、重大阻擋、恢復、Engineering Complete 或需使用者授權時立即更新。
+- 主 Agent 統一寫入。Sub Agent 只回報給 Main，不能各自改檔。
+- 每次更新工作階段、實際已完成能力、測試／證據摘要、當前阻擋及自主修復動作、下一里程碑和授權需求。
+- 預先讀取 GitHub Blob SHA 並做衝突安全更新。寫入失敗不能宣稱同步成功。
+- 公開資訊必須去敏，私有 KA 檔案、公司內容、真實程式碼、測試原文與環境細節一律不推送。
+- ChatGPT 將另設固定週期檢查檔案，只有重大變化或狀態停滯等需要注意的情況才通知使用者。更新檔案本身不等於交付可用能力。
+- 完整同步契約以 [自主總任務 v2.0 的 8A 節](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) 為準。
+
 ## 給 Coding Agent 的直接指令
 
 請由本公開 GitHub Repository 的指定 Markdown 檔取得完整工作規格，並記錄真正抓取到的 GitHub Commit SHA。
