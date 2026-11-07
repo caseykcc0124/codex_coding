@@ -12,6 +12,14 @@
 
 請從 main 取得兩份指令檔的實際 GitHub Commit／Blob SHA，並讀取既有本地 KA 工作樹與 receipts 以取得真實最新狀態。持續依下節只更新根目錄唯一去敏同步檔，不得將內部工程資料推送公開。
 
+## 離線套件阻擋處理：立即生效
+
+**使用者已要求由 ChatGPT 協助取得可公開且授權的缺失 Wheel，Coding Agent 不需等待總指令。** 請 Main 立即讀取：[E9 離線 Wheel 取得與交接指引](./KA_DMM_E9_Offline_Wheel_Acquisition_Handoff.md)。
+
+目前公開摘要只有 18 件缺失數量（15 件 runtime 必需、3 件 exact profile 其他項），尚無可用於正確下載的套件名稱／精確版本／目標 Python ABI／Windows tags。請立即依指引，將**允許公開的 PyPI 缺件清單**加入唯一的 `KA_DMM_STATUS_SYNC.md`，保留資料保護限制與所有現有欄位。同時持續 170 欄產品歸屬、PPTX 回歸、歷史映射、Release Gates 等其他無依賴工作。
+
+公開 GitHub 一般 Repo 不得直接當作未審查第三方大型二進位套件倉庫。二進位交付必須先驗 license、hash 和可用傳輸通道；來源清單或 README 不能代替真正 offline rebuild PASS。不准私自繞過網路限制、發布受限 wheel 或執行 E10。
+
 ## 強制狀態同步
 
 **本總任務執行期間，Main Agent 必須把去敏進度更新至公開 Repository 根目錄的 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。**
