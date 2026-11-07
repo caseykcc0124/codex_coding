@@ -8,18 +8,18 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T10:46:27.090Z |
-| last_progress_at_utc | 2026-11-07T09:38:53.894Z |
+| updated_at_utc | 2026-11-07T11:09:40Z |
+| last_progress_at_utc | 2026-11-07T11:09:40Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 依CURRENT_WORK 8ad94b4接續170欄必要契約與可重跑佈建；public wheel workflow失敗已定位 |
+| current_work_item | Office引用定位遺失已修復並獨立覆核；新successor RC執行CI與50回歸，170欄必要契約收斂中 |
 | stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
 | release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
-| next_action | 執行原Office／Review資料的逐欄正反驗證，獨立覆核後收斂真implementation缺口 |
+| next_action | 新RC實跑22 CI與原50回歸，完成170欄責任判定與新發行包，不啟動E10 |
 | requires_user_action | NO_FOR_CURRENT_LOCAL_WORK |
 | user_action_summary | 目前隔離工程可繼續；E10未授權，代表性正式RAG品質仍需另具條件 |
 
@@ -271,3 +271,13 @@ Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a467
 新增public wheel workflow實際run `42359551615`，job `128364806635` 在SHA verifier步驟exit1。公開log顯示 `Expected one METADATA in setuptools-84.0.0-py3-none-any.whl`，因為vendored dist-info被一併計數，upload未完成、artifact未交付。最小修復是只選唯一頂層METADATA/WHEEL，保留name/version/tags/SHA驗證後重跑。這個外部workflow失敗與本地已驗18wheel／cleanPDF是獨立結果，不抹除本地PASS，也不當作產品remoteCI已通過。
 
 目前正使用原始不可變Office fixtures補170欄逐欄owner、consumer、implementation與真行為assertion。沒有擅自批准deprecation或legacy parity；真缺implementation會列為下一個最小修復。RC、原部署profile與ZIP保持不變，E10正式環境未動。
+
+## E9 Office引用修復與離線補充包
+
+原文件實測找到真產品缺口：審核母本有3個圖表／數列來源定位，持久化chunk卻為0。已在獨立successor commit `d2635ae4aca147fa29af774da14df8b4fd8944d5` 保存來源定位，並補RAG與查詢歷史的native lineage顯示。修後同原文件33項流程檢查PASS、持久化定位3/3保真、7組索引安全案例PASS；實際本機Chrome也顯示圖表與兩個數列位置。獨立diff覆核已修未知kind／畸形kind問題，無此範圍release-critical code findings。尚未以新commit完成22 CI與50回歸，不能承繼舊RC結果作新RC PASS。
+
+另完成20欄Office原件→Review→核准後Serving的正向核對及20個變造反例；Main核對actual exit、source hashes與收據相符。這是有界欄位證據，170欄完整產品責任矩陣仍在收斂，不宣全legacy parity。
+
+本地私人離線補充包已實際產製並獨立讀回：209個payload／210個ZIP members，98個API wheels、84個PDF wheels、14個sealed模型；全部hash、hashlocks、tags與原RC ZIP相符。補充ZIP SHA256 `ab54c22a0a8f9276c0344dd385fa3a5b425b3dff690c8f0b869981cf17206934`。此包保留原RC54745fd，並非新successor發行包。verify-only實跑PASS；新portable installer完整安裝仍NOT_TESTED。操作必須明確指定verify或install，無參數拒絕；manifest checksum sidecar在ZIP外層，須連同內部交付。私人包與模型未傳公開Repository。
+
+原PPTX digest FAIL保留、Golden不改；新版有界source-truth契約與舊身份雜湊差異分開判定，不把舊50宣為全綠。真實corpus/live RAG品質、任意歷史映射與其他必要契約仍分開追蹤，整體保持NOT_READY，E10未動。
