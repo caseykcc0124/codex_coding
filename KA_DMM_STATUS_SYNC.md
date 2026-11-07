@@ -8,18 +8,18 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T06:41:00+00:00 |
-| updated_at_taipei | 2026-11-07T14:41:00+08:00 |
+| updated_at_utc | 2026-11-07T07:37:57+00:00 |
+| updated_at_taipei | 2026-11-07T15:37:57+08:00 |
 | instruction_version | v2.0 |
 | chatgpt_monitor_state | ACTIVE_CURRENT_SESSION |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 凍結版 22 步統一驗證、發行證據與同步 |
+| current_work_item | E9 Final Closure：凍結 RC、實際本機 job 與發行包 |
 | stage_gate | FULL_SUITE_22_PASS / RELEASE_GAPS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
-| last_progress_at_utc | 2026-11-07T06:41:00+00:00 |
+| last_progress_at_utc | 2026-11-07T07:37:57+00:00 |
 | next_action | 完成最終 commits／manifest／release gates 與 PDF 離線重建缺項 |
 | requires_user_action | NO |
 | user_action_summary | 沒有新的授權要求；正式切換仍未授權 |
@@ -67,3 +67,6 @@ Chrome 完整流程 10 項 PASS：文件／區塊視角、邊界、混批儲存�
 E0–E9 工程持續已授權。正式切換與不可逆資料處置仍需另行授權；沒有公開公司程式、原文件、私人路徑、logs 或秘密。
 
 產品 Gate 與同步分開判定。本次先以 Chrome 讀回既有公開檔並核對內容，再使用線上編輯更新；不使用 git 或檔案上傳，不以同步完成推論工程已可發布。
+
+本次 E9 closure：原生功能與驗證工具已有兩個本地 commit。RC 原50重跑49 PASS／1相同已知PPTX FAIL，三次工具profile失敗證據保留。新增 headed Chrome完整流程10 PASS。CI wrapper已補獨立歷史50個test ID、failure signature與三Golden SHA核對，正向與替換失敗內容／test ID反例通過；尚未宣稱實際CI job或新RC完整22步通過。170欄責任補齊，其中19欄有具名斷言，151欄仍缺逐欄驗證，29項R1 BLOCKED未裁定。PDF84列缺項矩陣已完成，18缺wheel含15必要runtime依賴；沒有下載或偽造clean rebuild。
+
