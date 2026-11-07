@@ -1,5 +1,7 @@
 # KA-DMM：M2-V0 無 DS 原生路徑交付指引
 
+> **M2-V0 已由使用者回報 PASS，這份文件保留為已完成批次的歷史指引。下一個 WorkItem 依 [M2-V1 v1.4](./KA_DMM_M2_V1_DCLX_Native_Import_Execution_Guide_v1.4.md) 執行。**
+
 > **工作指引版本：v1.3，2026-11-06**  
 > **狀態：待 Coding Agent 執行，未宣稱任何新增測試通過**  
 > **前置版本**：[主計畫 v1.2](./KA_DMM_Docling_Native_Migration_Plan_v1.2.md)、[P0-R 工作指引 v1.2](./KA_DMM_P0_Blocker_Resolution_Execution_Guide_v1.2.md)  
