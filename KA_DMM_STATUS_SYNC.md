@@ -8,20 +8,21 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T12:06:44Z |
-| last_progress_at_utc | 2026-11-07T12:06:44Z |
+| updated_at_utc | 2026-11-07T12:23:34Z |
+| updated_at_taipei | 2026-11-07T20:23:34+08:00 |
+| last_progress_at_utc | 2026-11-07T12:23:34Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
-| mission_state | ACTIVE |
-| active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 最終CI22及portable真PDF流程PASS；170欄修正版獨立PASS；最後UI回歸與ZIP驗收中 |
-| stage_gate | SUCCESSOR_ACTUAL_CI_22_PASS / NATIVE_170_BOUNDED_PASS / FINAL_UI_PACKAGE_PENDING |
-| engineering_release_status | NOT_READY |
+| mission_state | ENGINEERING_COMPLETE |
+| active_stage | E9_COMPLETE_AWAITING_PRODUCTION_ACCEPTANCE |
+| current_work_item | 凍結RC、離線依賴、170欄契約、最終UI與私有ZIP獨立驗收完成 |
+| stage_gate | READY_FOR_RELEASE / PRODUCTION_ACCEPTANCE_PENDING / E10_NOT_AUTHORIZED |
+| engineering_release_status | READY_FOR_RELEASE |
 | production_status | NOT_AUTHORIZED |
 | release_commit | fb1aa0e6dc9da4fedcd285ea2471dff230f862ad |
-| next_action | 新RC實跑22 CI與原50回歸，完成170欄責任判定與新發行包，不啟動E10 |
-| requires_user_action | NO_FOR_CURRENT_LOCAL_WORK |
-| user_action_summary | 目前隔離工程可繼續；E10未授權，代表性正式RAG品質仍需另具條件 |
+| next_action | 依配套runbook完成正式品質與共同服務配置驗收；未授權前不執行E10 |
+| requires_user_action | NO_FOR_E9; SEPARATE_AUTHORIZATION_REQUIRED_FOR_E10 |
+| user_action_summary | 本輪E9隔離工程已完成。正式資料、品質條件與E10切換另行確認；不自動部署 |
 
 ## 階段判定
 
@@ -36,7 +37,7 @@
 | E6 | PASS_SCOPED | 核准同版 Index／Serving、拒答與故障回退；embedding 合成，不代表 relevance 品質 |
 | E7 | PASS_UI_SCOPED | Headed Chrome 10 項、45 頁按需快取 5 項；Original Viewer 判定見下文 |
 | E8 | PASS_ISOLATED_SCOPED | 相容／降版／回退 probes；候選 reader 保持 quarantine |
-| E9 | NOT_READY | 最終 RC 本機隔離 CI 22/22 PASS；發布阻擋仍保留 |
+| E9 | ENGINEERING_COMPLETE_SCOPED | 最終候選版CI22、offline rebuild、native170、Chrome10/cache5、實際ZIP及非作者驗收完成；正式品質另列 |
 | E10 | NOT_AUTHORIZED | 正式服務、DB、Index、流量均未切換 |
 
 ## 本輪實際成果
@@ -307,3 +308,30 @@ Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a467
 170欄第一版雖數量及hash正確，獨立語意覆核找到17列identity／來源recipe描述錯誤；另立修正版，改成實際KA Evidence identity及source／recipe composites，明確區分模型runtime收據與每文件manifest。修正版170unique、119sourcepins、14receipt hashes、原R1與predecessor evidence保留；Main140檢查及非作者review PASS。161 bounded mappings／9已批准scalar supersessions不代表任意legacy scalar parity，原29歷史unresolved未被升級。
 
 由於本次Review JS／CSS有變更，正在用新候選版與另一組隔離fixture端口補final混批Chrome操作及45頁快取回歸；舊Viewer5項PASS不算這項新UI结果。最終source ZIP、描述檔及引用的獨立逐byte驗收仍待完成。整體NOT_READY，E10未授權，無需使用者為當前本機工程追加授權。
+
+
+## E9 最終工程交付判定
+
+工程判定為ENGINEERING_COMPLETE／READY_FOR_RELEASE，限Mission v2.0與E9的已驗隔離工程範圍。正式Production Acceptance未完成，E10仍NOT_AUTHORIZED，沒有變更正式服務、DB、Index alias或流量。
+
+最終凍結候選版已形成實際私有程式ZIP與獨立的離線依賴元件。非作者直接核對906個Git source/test檔的OID、SHA與bytes、16個描述檔、4個metadata、926個唯一安全ZIP members及CRC、545個實檔引用、四個必要migrations，全部PASS。原profile、原依賴ZIP及其內原source backup保持不變。新source是候選版，依賴包內旧source僅歷史備份。私人包、公司程式／原件／環境與完整證據未上傳公開。
+
+| 最終驗收 | 結果 | 實測限制 |
+|---|---|---|
+| 凍結來源實際CI | 22/22 PASS，exit0，0FAIL／requiredSKIP／timeout | 真本機隔離job，source／inputs不變；不是遠端CI |
+| 原50回歸 | 49PASS／1相同已知PPTX digest FAIL | 原test IDs／三Golden／failure signature不變；不宣50全綠 |
+| Native來源與引用 | 有界PASS，測例錯誤正向綁定0 | PDF、DOCX、PPTX、XLSX、DCLX、HTML、MD、TXT及ZIP/MCP/CLI intake契約；不等於所有corpus或live converter品質 |
+| 最終Chrome工作流程 | headed 10項PASS，page-cache 5項PASS，兩程序exit0 | 就地混批編輯／邊界／保存／chunk／含圖表HTML／核准Serving一致；45頁僅三個20頁視窗，返回快取無HTTP |
+| UI程式來源 | 四個JS/CSS實際回應符合凍結Git bytes的fixture轉換 | 只改測試端口與換行輸出；產品未改，本輪專用fixture已停止 |
+| 離線依賴與PDF | 全新API98／PDF84 install、pipcheck及真PDF→Serving PASS | 短root／14封存模型；第一深路徑失敗保留，metadata／embedding合成 |
+| Native170逐欄責任 | 161 bounded mappings／9批准scalar supersessions；Main與非作者PASS | 第二版修17列identity／provenance引用，170unique／119sourcepins／14receipts；原29R1未解映射及legacy差異保留 |
+| 新業務DS退休 | 所測fresh新入口／API／Index／Serving路徑DS loaded/import 0 | 隔離舊reader及無法唯一映射歷史資料維持只讀，不偽造Verified |
+| 私有RC與manifest | 906＋16＋4＝926members，非作者545引用讀回PASS | source包／依賴包／共同外部服務分開配置；不宣self-contained全部服務部署 |
+
+包內先前的NOT_READY及pending-package Gate是不可變的封裝時狀態。Main另立包外最終驗收收據，綁定實際ZIP與非作者結果，只取代該pending驗包及相依狀態；沒有回改ZIP、原receipts、原Golden或歷史FAIL。
+
+獨立Viewer的既有資產inventory已核對；外部file-preprocessor由共同服務或CLI獨立運作，設定與prerequisites在私有交付runbook。它們不在Python輪子／source包中，不能把本輪程式ZIP當成共同服務的新host部署。實際啟用前按runbook驗備份可恢復、shadow/index隔離、ACL／revision／引用、CAS alias與回退，錯引或事件丟失即停止擴大。
+
+仍未測的正式條件包括代表性真corpus／live LLM RAG relevance與groundedness、正式規模效能及共同服務新host／正式健康驗收。這些與已完成工程分開，不用合成embedding推論正式品質。Windows長路徑、原PPTX舊身份digest、任意legacy映射與optional parser profiles維持明列的有界限制，不承諾全相容。
+
+本輪沒有剩餘release-critical本機工程項，停止E9心跳，等待後續正式驗收／E10的新授權。沒有建立新的背景監聽或自動部署。本檔只經使用者Chrome線上編輯與固定commit Raw全文讀回同步。
