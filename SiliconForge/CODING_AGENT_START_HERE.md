@@ -28,3 +28,11 @@ python -m pytest -q tests
 ```
 
 這些僅為 A0 MOCK 參考，M1–M7 必須自行實作及取得真實驗收證據。
+
+## v3.1 工作指引新增優先順序（必讀）
+
+1. 讀 docs/12、docs/13、docs/14 與 config/exploration.yaml，將 `owner_role` 與 `owner_instance_id` 分開。每個新 Branch 要有穩定的 exploration_id、branch_id、candidate_id、Git SHA 與來源血緣。
+2. 按 M1X 完成 Registry、Candidate scoped Event Routing/Lease、Durable Fanout/Fanin、Quota、Restart；按 M3X 完成真 Git Worktree 隔離與多 Codex Owner Instance；按 M6X 交付三條不同目標的真 EDA、二級分叉、Pareto、Merge 後新 SHA 重跑 Gate。
+3. E01–E20 全為 Required，原 A01–D12 共 58 項全部保留，總計 78 項。未取得真實執行證據仍為 NOT_RUN；Mock 不可冒稱真實。
+4. 所有重要 Branch/Fork/Merge/Spec Stale/Stop/Comparison 立即寫入 `SILICONFORGE_WORKING_SYNC.md`，證據包含 branch_id、commit SHA、owner_instance_id、EDA Fingerprint 與 Stop Reason。
+5. 不得把三個 Worker 在同一 Worktree 先後修改當成平行探索，也不能讓 Owner 自行放寬配額、直接合併 main 或發布遠端分支。
