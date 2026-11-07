@@ -8,20 +8,20 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T09:38:53.894Z |
+| updated_at_utc | 2026-11-07T10:46:27.090Z |
 | last_progress_at_utc | 2026-11-07T09:38:53.894Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 18件官方wheel取得及84套件offline install通過；真PDF入庫到Serving限定驗證PASS |
+| current_work_item | 依CURRENT_WORK 8ad94b4接續170欄必要契約與可重跑佈建；public wheel workflow失敗已定位 |
 | stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
 | release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
-| next_action | 維持RC凍結；收斂PPTX版本契約、欄位歸屬與代表性RAG品質等剩餘Gate |
-| requires_user_action | YES_FOR_EXTERNAL_RELEASE_INPUTS |
-| user_action_summary | 套件下載不需使用者代辦；代表性品質驗收資料與E10授權仍另處理 |
+| next_action | 執行原Office／Review資料的逐欄正反驗證，獨立覆核後收斂真implementation缺口 |
+| requires_user_action | NO_FOR_CURRENT_LOCAL_WORK |
+| user_action_summary | 目前隔離工程可繼續；E10未授權，代表性正式RAG品質仍需另具條件 |
 
 ## 階段判定
 
@@ -262,3 +262,12 @@ Main已讀實際receipt／exit code並核對RC未變。上述只是追加限定�
 全新Windows CPython3.12隔離venv安裝84件hash-locked原始wheel，pip使用no-index與require-hashes。建立、安裝、pip check與身份核對四個程序均exit0；84件installed identity吻合、user site disabled、所有site-packages位於新venv。
 
 新PDF環境完成一次真parser、Review、核准與Index流程，產生3個chunks與1張頁面圖片。Serving真ASGI路由核對未登入拒絕、raw／map同有效revision、圖片讀取與錯誤hash拒絕，共4項檢查PASS。API使用既有clean98環境，PDF subprocess使用新clean84環境；資料庫為隔離SQLite語法adapter、metadata與embedding合成。這解除原18wheel取得與這項clean PDF重建卡點，不代表整體170parity、live RAG品質、正式PostgreSQL或E10已通過。RC/profile/舊ZIP未改。
+
+
+## CURRENT_WORK 8ad94b4 接續
+
+Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a46770d68e` 與blob `9735b2c6561f1781d37521eb86b4b267ac4f2a13`。E9 guide commit `9f0c83083364d4364e570713ea9ffb975f316170`、Mission v2.0 commit `5936429058e6bf9fecbfa35ae8be5cc92ba91218` 未变。前輪18官方wheel與clean84 PDF→Serving PASS保留，這輪沒有宣告新增可用產品功能。
+
+新增public wheel workflow實際run `42359551615`，job `128364806635` 在SHA verifier步驟exit1。公開log顯示 `Expected one METADATA in setuptools-84.0.0-py3-none-any.whl`，因為vendored dist-info被一併計數，upload未完成、artifact未交付。最小修復是只選唯一頂層METADATA/WHEEL，保留name/version/tags/SHA驗證後重跑。這個外部workflow失敗與本地已驗18wheel／cleanPDF是獨立結果，不抹除本地PASS，也不當作產品remoteCI已通過。
+
+目前正使用原始不可變Office fixtures補170欄逐欄owner、consumer、implementation與真行為assertion。沒有擅自批准deprecation或legacy parity；真缺implementation會列為下一個最小修復。RC、原部署profile與ZIP保持不變，E10正式環境未動。
