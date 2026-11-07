@@ -166,3 +166,7 @@ MCP 工具對應 `docs/04`，所有寫入有 `idempotency_key`、CSRF/Identity S
 - `reports/ACCEPTANCE_REPORT.md`：逐 Case 真實執行結果、證據檔與 SHA。
 - `reports/ARCHITECTURE_DEVIATION.md`：如有必要架構修改，保留批准者與原因。
 - `SILICONFORGE_WORKING_SYNC.md`：跨 Coding Agent 的單一進度同步入口。
+
+## v3.1 Persistent Exploration Domain
+
+新增/遷移 DB 實體：`explorations`、`branches`、`owner_instances`、`candidates`、`eda_jobs`（帶 branch_id） 、`lineage_edges`、`merge_requests`、`exploration_events`、branch-scoped `evidence`。必須支援 parent/fork/multiple merge lineage、Git SHA 與 Branch Registry 綁定、Lease Epoch CAS、Job Registry 權威回投、Merge 後重新 Gate。新的 MCP/REST Command 以 docs/14 的 `request_exploration`、`fork_branch`、`get_lineage`、`propose_merge`、`apply_merge` 等為最小集合，經 Schema/AuthZ/Idempotency/Outbox，不直接開放任意 shell 或 git push。
