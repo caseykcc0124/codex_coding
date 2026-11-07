@@ -32,6 +32,13 @@ python -m pytest -q tests
 
 參考 Kernel 是 Mock A0，並非真實 Harness、MCP 或 EDA 成果。
 
+
+[source/CONTRACTS_SKILLS_INTEGRATIONS.tar.xz](source/CONTRACTS_SKILLS_INTEGRATIONS.tar.xz) 包含原始 `contracts/` JSON Schema、`skills/` 領域 P-Stack Skills 和 Codex／Claude Code `integrations/` 指引。SHA256 為 `2d3259f6f20ce83fa2d5b7d8e576f5dd838e04b9e10456366f4aa3f289eed0cf`。執行：
+
+```bash
+tar -xJf source/CONTRACTS_SKILLS_INTEGRATIONS.tar.xz
+```
+
 ## 文件與目前狀態
 
 [整合規格（完整 00–10 章）](spec/SiliconForge_v3_0_Full_Implementation_Spec.md)，[詳細的事件生命週期](docs/02_EVENT_RUNTIME_PROTOCOL.md)，[Owner P-Stack 規格](docs/03_OWNER_PSTACK_EDA_WORKFLOWS.md)，[MCP／Harness](docs/04_HARNESS_MCP_HUMAN_INTERFACE.md)，[Dashboard／PDCA](docs/05_OBSERVABILITY_PDCA_AND_DASHBOARD.md)。

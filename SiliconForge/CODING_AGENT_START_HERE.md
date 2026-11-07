@@ -18,3 +18,13 @@
 不能另外造對話 CLI、把 Main 當中央仲裁、偷偷減少工具驗收、沒有批准就擴張資源或外部發布。這些是不可通過驗收的違規架構。
 
 GitHub 發布位置：`caseykcc0124/codex_coding`，專案子目錄 `SiliconForge/`，請將本目錄設為工作目錄。權威進度檔為 `SILICONFORGE_WORKING_SYNC.md`。
+
+正式開始 M0 前，先於本目錄解開源碼包：
+```bash
+tar -xJf source/A0_REFERENCE.tar.xz
+tar -xJf source/CONTRACTS_SKILLS_INTEGRATIONS.tar.xz
+python -m pip install -r reference/requirements-dev.txt
+python -m pytest -q tests
+```
+
+這些僅為 A0 MOCK 參考，M1–M7 必須自行實作及取得真實驗收證據。
