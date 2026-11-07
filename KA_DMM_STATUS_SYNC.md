@@ -11,19 +11,19 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T01:29:12+00:00 |
-| updated_at_taipei | 2026-11-07T09:29:12+08:00 |
+| updated_at_utc | 2026-11-07T01:48:31+00:00 |
+| updated_at_taipei | 2026-11-07T09:48:31+08:00 |
 | instruction_version | v2.0 |
 | chatgpt_monitor_state | ACTIVE_EVERY_2_HOURS |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E1 |
-| current_work_item | 安全 DCLX 原生匯入；平行盤點治理接線 |
+| current_work_item | DCLX bundle、來源 adapter、Office 精確證據、原生治理接線與獨立安全審查 |
 | stage_gate | E0_LOCAL_BASELINE_PASS / E1_IMPLEMENTING |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
-| last_progress_at_utc | 2026-11-07T01:29:12+00:00 |
-| next_action | 完成 DCLX 原生匯入、來源描述與安全拒絕測試，再擴充其他來源 |
+| last_progress_at_utc | 2026-11-07T01:48:31+00:00 |
+| next_action | 完成 DCLX 與治理／Office slice 驗收，再整合 bundle、chunk/citation 與既有 API/UI |
 | requires_user_action | NO |
 | user_action_summary | 無 |
 
@@ -35,10 +35,10 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 |---|---|---|---|
 | E0 Baseline | PASS_LOCAL | 保存及核對 728 個程式／測試檔，建立隔離工作樹；本次 V0 T01–T10 全 PASS | 保持基線，驗收新原生來源 |
 | E1 DCLX | IMPLEMENTING | 已確認公開 Loader、安全限制與 Windows 相對 URI 缺陷；本次尚無新增可用產品能力 | 完成並測試原生匯入 |
-| E2 Sources | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
-| E3 Office Evidence / Anchor | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
-| E4 Persistence / Migration | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
-| E5 Review / Effective | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
+| E2 Sources | IMPLEMENTING | 7 類來源已通過原生轉換及 JSON 重載；MD/HTML/ZIP 圖片保留，尚未驗收全入庫鏈 | 接入共用 bundle、chunk/citation |
+| E3 Office Evidence / Anchor | IMPLEMENTING | 正在實作來源 selector、公式/cache、chart series 與 native binding；尚待 Main 驗收 | 來源 Truth 與 unresolved 反例 |
+| E4 Persistence / Migration | IMPLEMENTING | 版本化 canonical 與既有事件儲存接線中；歷史遷移未驗收 | 原生 snapshot 與歷史 dry-run |
+| E5 Review / Effective | IMPLEMENTING | 原生 draft/adoption/CAS/核准 slice 實測中；metadata 與管理角色標註缺口正在修正 | 接回既有完整審核業務流程 |
 | E6 Chunk / RAG / Index | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
 | E7 Viewer / DocLang | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
 | E8 Upstream Compatibility | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
@@ -85,3 +85,7 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 本次 V0 T01–T10 全 PASS、8 integration PASS、20 policy comparisons PASS。原有 50 項回歸為 49 PASS、1 unchanged known FAIL。既有 PDF 正向來源引用錯引為 0；其他新來源未測，不外推為全系統錯引 0。正式系統仍有 DS 依賴，尚未切換。未讀寫正式 DB／Index、未重啟正式服務。完整測試與來源證據保留本地。
 
 同步由 Main 在實際可執行段落與狀態改變時寫入，持續 ACTIVE 執行期間最多 60 分鐘檢查一次；沒有另啟無人管理的背景程序。監督者排程欄位沿用模板，本 Agent 未重新驗證該外部排程。
+
+## 來源轉換進度增補
+
+本次新增工程 API 已實測 MD、TXT、HTML、MD ZIP、DOCX、PPTX、XLSX 直接產生 official DoclingDocument，再從 JSON 重載。7 類转换皆通過；MD/HTML/ZIP 圖片仍可讀。5 個遠端／file／traversal／reference image／ZIP traversal 反例被拒絕。实际受 DS 匯入和 socket 防護的新 process 也通過，DS 匯入為 0。Guard 自身的 DS/網路反例已驗證拒絕。這些數字只涵蓋轉換 slice，不代表完整 Review/Index/RAG 或 E2 Gate 已 PASS。
