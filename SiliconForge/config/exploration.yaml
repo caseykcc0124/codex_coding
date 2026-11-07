@@ -1,0 +1,26 @@
+policy_version: exploration-v3.1
+enabled: true
+initial_strategies: [performance, low_power, area]
+max_initial_branches_per_exploration: 3
+max_total_branches_per_exploration: 6
+max_active_branches_per_exploration: 3
+max_branch_depth: 2
+max_parallel_owner_instances_per_role: 3
+max_cross_branch_peers_without_scope: 0
+worktree_root: .siliconforge/worktrees
+branch_ref_prefix: sf
+require_expected_parent_head_sha: true
+require_branch_scoped_evidence: true
+require_post_merge_regate: true
+allow_llm_direct_main_merge: false
+allow_unreviewed_gate_weakening: false
+comparison:
+  hard_gate_first: true
+  incompatible_profile_action: INCOMPARABLE
+  selection_mode: pareto_then_authorized_policy
+  require_human_on_unapproved_tradeoff: true
+resource_governance:
+  enforce_parent_and_child_budgets: true
+  branch_failure_budget_unchanged_signature: 3
+  shared_eda_quota_from: config/autonomy.yaml
+  fair_scheduling_across_branches: true

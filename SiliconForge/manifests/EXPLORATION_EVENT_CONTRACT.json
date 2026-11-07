@@ -1,0 +1,50 @@
+{
+  "version": "exploration-events-v3.1",
+  "notes": "Contract index; runtime schema validation to be implemented at M1X/M3X",
+  "required_base": [
+    "event_id",
+    "event_type",
+    "producer_identity",
+    "correlation_id",
+    "causation_id",
+    "idempotency_key",
+    "policy_version"
+  ],
+  "scoped_events": [
+    "EXPLORATION.REQUESTED",
+    "EXPLORATION.STARTED",
+    "BRANCH.FORK_REQUESTED",
+    "BRANCH.CREATED",
+    "BRANCH.OWNER_ASSIGNED",
+    "BRANCH.CANDIDATE_READY",
+    "BRANCH.EVIDENCE_READY",
+    "BRANCH.BLOCKED",
+    "BRANCH.STALE",
+    "BRANCH.ARCHIVED",
+    "BRANCH.COMPARISON_READY",
+    "BRANCH.MERGE_PROPOSED",
+    "BRANCH.MERGE_CONFLICT",
+    "BRANCH.MERGED",
+    "BRANCH.MERGE_REVERIFY_REQUIRED",
+    "BRANCH.MERGE_REVERIFIED"
+  ],
+  "fields": {
+    "exploration_id": "string",
+    "branch_id": "string|null",
+    "candidate_id": "string|null",
+    "owner_role": "string|null",
+    "owner_instance_id": "string|null",
+    "parent_branch_id": "string|null",
+    "expected_head_sha": "40-hex|null",
+    "spec_sha": "sha256|null",
+    "constraint_sha": "sha256|null",
+    "env_digest": "sha256|null",
+    "job_id": "string|null"
+  },
+  "trust_rules": [
+    "job-completed target from trusted job registry, never payload",
+    "peer-request target from trusted peer registry",
+    "every branch-scoped event verifies same exploration and branch relationship",
+    "canonical merge requires authorized git service and re-validation on merge SHA"
+  ]
+}
