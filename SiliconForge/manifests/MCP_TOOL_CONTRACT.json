@@ -1,0 +1,33 @@
+{
+  "version": "v3.0",
+  "server": "siliconforge",
+  "transport": [
+    "stdio-local",
+    "streamable-http-authenticated"
+  ],
+  "tool_names": [
+    "sf_get_status",
+    "sf_list_events",
+    "sf_get_evidence",
+    "sf_get_communication",
+    "sf_get_notifications",
+    "sf_propose_intent",
+    "sf_commit_intent",
+    "sf_send_peer_message",
+    "sf_submit_approval",
+    "sf_control_ticket",
+    "sf_ack_notification"
+  ],
+  "trusted_internal_only": [
+    "sf_submit_event",
+    "sf_publish_eda_result",
+    "sf_promote_toolchain"
+  ],
+  "mutating_required_fields": [
+    "idempotency_key",
+    "expected_revision",
+    "scope"
+  ],
+  "identity_rule": "derive principal from authenticated transport, never from model-supplied actor field",
+  "remark": "Contract inventory; production MCP server not yet implemented"
+}

@@ -1,0 +1,18 @@
+policy_version: harness-v3.0
+user_harnesses: [codex, claude_code]
+owner_harness_default: codex_sdk
+model_selection:
+  strategy: discover_compatible_entitled_model_then_pin_per_run
+  fallback: pause_and_record_if_unavailable
+  allow_unapproved_cross_provider_fallback: false
+role_policies:
+  spec: {reasoning: high, sandbox: read_only}
+  rtl: {reasoning: medium, sandbox: workspace_write}
+  verification: {reasoning: medium, sandbox: workspace_write}
+  formal: {reasoning: high, sandbox: workspace_write}
+  ppa: {reasoning: medium, sandbox: workspace_write}
+  eda_environment: {reasoning: medium, sandbox: workspace_write}
+  integration: {reasoning: high, sandbox: read_only}
+  pdca: {reasoning: high, sandbox: read_only}
+thread_recovery: reconstruct_from_ticket_snapshot_when_thread_unavailable
+external_messages: lower_trust_than_human_instruction

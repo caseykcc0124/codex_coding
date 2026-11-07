@@ -1,0 +1,18 @@
+route_version: routes-v3.0
+unknown_event: QUARANTINE
+match_order: most_specific_then_priority
+rules:
+  - {id: spec_change, type: SPEC.CHANGE_REQUESTED, primary_owner: spec, subscribers: [integration], producer_roles: [human_intent_gateway, trusted_spec_source], priority: 90}
+  - {id: spec_baseline, type: SPEC.BASELINE_APPROVED, primary_owner: rtl, subscribers: [verification, formal, ppa], producer_roles: [owner:spec], priority: 90}
+  - {id: sim_failed, type: SIM.REGRESSION_FAILED, primary_owner: verification, subscribers: [], producer_roles: [trusted_ci, eda_runner], priority: 95}
+  - {id: sim_passed, type: SIM.REGRESSION_PASSED, primary_owner: integration, subscribers: [], producer_roles: [owner:verification], priority: 60}
+  - {id: formal_failed, type: FORMAL.PROOF_FAILED, primary_owner: formal, subscribers: [], producer_roles: [eda_runner, owner:formal], priority: 95}
+  - {id: formal_passed, type: FORMAL.PROOF_PASSED, primary_owner: integration, subscribers: [], producer_roles: [owner:formal], priority: 60}
+  - {id: rtl_candidate, type: RTL.CANDIDATE_READY, primary_owner: verification, subscribers: [formal, ppa], producer_roles: [owner:rtl], priority: 95}
+  - {id: ppa_target, type: PPA.TARGET_CHANGED, primary_owner: ppa, subscribers: [integration], producer_roles: [human_intent_gateway, trusted_spec_source], priority: 95}
+  - {id: ppa_missed, type: PPA.TARGET_MISSED, primary_owner: ppa, subscribers: [], producer_roles: [eda_runner, owner:ppa], priority: 90}
+  - {id: env_required, type: ENV.PROFILE_REQUIRED, primary_owner: eda_environment, subscribers: [], producer_roles: [runtime, eda_runner], priority: 90}
+  - {id: env_blocked, type: ENV.PROFILE_BLOCKED, primary_owner: eda_environment, subscribers: [], producer_roles: [runtime, eda_runner], priority: 95}
+  - {id: eda_complete, type: EDA.JOB_COMPLETED, primary_owner_from: job_registry.requesting_owner, subscribers_from: job_registry.subscribers, producer_roles: [eda_runner], priority: 85}
+  - {id: peer_request, type: PEER.REQUEST_CREATED, primary_owner_from: peer_request.target_owner, subscribers_from: peer_request.origin_owner, producer_roles: [registered_owner], priority: 85}
+  - {id: human_approval, type: HUMAN.APPROVAL_RECORDED, primary_owner_from: approval_registry.waiting_owner, subscribers: [], producer_roles: [human_gateway], priority: 100}

@@ -1,0 +1,10 @@
+version: notification-v3.0
+sink: durable_outbox
+channels:
+  - {name: web_dashboard, default: true}
+  - {name: harness_resume_sync, default: true}
+  - {name: harness_push, default: false, condition: feature_detected_and_authorized}
+  - {name: external_webhook, default: false, condition: explicit_user_authorization}
+retry_policy: {max_attempts: 10, backoff: exponential, initial_seconds: 5}
+allow_llm_polling_loop: false
+collapse_window_seconds: 300

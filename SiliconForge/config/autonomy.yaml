@@ -1,0 +1,18 @@
+policy_version: autonomy-v3.0-example
+mode: bounded_autonomous
+namespace: production
+agent_turn_budget_per_ticket: 8
+max_unchanged_failure_signature: 3
+max_arena_candidates: 3
+max_parallel_workers_per_owner: 3
+max_nested_worker_depth: 2
+max_concurrent_eda_jobs: 2
+max_eda_cpu_minutes_per_ticket: 120
+max_model_cost_usd_per_ticket: 15
+max_model_cost_usd_per_day: 50
+lease_seconds: 90
+heartbeat_seconds: 30
+max_peer_roundtrips_without_new_evidence: 2
+notify_on: [APPROVAL_REQUIRED, BLOCKED, COMPLETED, SECURITY_POLICY_VIOLATION, BUDGET_NEAR_LIMIT]
+requires_human_approval: [new_repository, external_publish, new_network_destination, policy_change, toolchain_promotion, broaden_scope, increase_budget, weaken_gate, change_safety_spec]
+forbidden_owner_actions: [edit_router_config, edit_budget_policy, install_eda_tools, fabricate_evidence, external_publish_without_approval]
