@@ -42,3 +42,16 @@ SYNC Updated: <UTC timestamp>
 ## 終止條件
 
 應持續自主推進至正式可驗收成果，或遇到真正需要人類權限／外部資訊的 Blocker。不能以「已寫好 Spec」、「完成 50 個 Unit Tests」、「Demo 動畫可以播放」作為正式完成。失敗需要可重現證據，不應藏掉。
+
+## v3.1 Coding Agent 指令補充（立即生效）
+
+此工作仍在同一 SiliconForge Repository 推進，不能另起新框架。每個 Domain Role 允許多個 Owner Instance，使用 Git Worktree 隔離同 Requirement 下的多策略候選。依 docs/12/13/14 及 config/exploration.yaml 實作 M1X、M3X、M6X；完整實作 Nested Fork、Branch Lineage、CandidateScoped Events、Worker Lease、IDA/EDA Evidence Fingerprint、比較與 Pareto、受控 Merge/Cherry-pick、Merge 後新 SHA 全 Gate 重新驗證。
+
+### 本輪起新增交付證據
+
+- Branch/Owner Instance DAG、三個重疊執行期的 RTL Owner Instance 與真 Git refs/heads/worktrees。
+- 各 Candidate 的不同 RTL SHA，Simulation／Formal／PPA Evidence 與 EDA Environment Digest。
+- MergeProposal、衝突與受控決策、merged SHA re-gate、淘汰分支與 PDCA 追蹤。
+- 分支級資源配額／無進展 Watchdog／失效 Spec Gate 拒絕與重啟恢復。
+
+原 58 + 新 20，共 78 Required。不得以測試次數、分支數、Agent 持續運作或未實測的 EDA 報告宣稱完成。
