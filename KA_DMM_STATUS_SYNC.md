@@ -1,72 +1,69 @@
 # KA-DMM 開發狀態同步
 
-> 公開去敏狀態；完整程式、資料與測試證據保留本地。局部 PASS 不代表正式切換。
-> [Autonomous Mission v2.0](./docs/KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) · [CURRENT WORK](./docs/KA_DMM_CURRENT_WORK.md)
+> 公開去敏摘要。完整程式與證據保留本地，局部 PASS 不代表正式切換。
+> [Mission v2.0](./docs/KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) · [CURRENT WORK](./docs/KA_DMM_CURRENT_WORK.md)
 
 ## 最新狀態
 
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T07:37:57+00:00 |
-| updated_at_taipei | 2026-11-07T15:37:57+08:00 |
-| instruction_version | v2.0 |
-| chatgpt_monitor_state | ACTIVE_CURRENT_SESSION |
+| updated_at_utc | 2026-11-07T08:22:41+00:00 |
+| last_progress_at_utc | 2026-11-07T08:22:41+00:00 |
+| instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | E9 Final Closure：凍結 RC、實際本機 job 與發行包 |
-| stage_gate | FULL_SUITE_22_PASS / RELEASE_GAPS_REMAIN |
+| current_work_item | 最終 RC 已凍結；交付封裝與完整 Gate 判定 |
+| stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
-| last_progress_at_utc | 2026-11-07T07:37:57+00:00 |
-| next_action | 完成最終 commits／manifest／release gates 與 PDF 離線重建缺項 |
-| requires_user_action | NO |
-| user_action_summary | 沒有新的授權要求；正式切換仍未授權 |
+| release_commit | 54745fd733e52744c9b5728bcbbc91d337ecdbbc |
+| next_action | 關閉欄位契約／驗證缺口、取得核准離線依賴與真實品質驗收條件 |
+| requires_user_action | YES_FOR_EXTERNAL_RELEASE_INPUTS |
+| user_action_summary | 解除完整發布需核准的離線套件來源及代表性品質驗收資料；內部欄位歸屬仍由工程處理，E10另行授權 |
 
-## 階段進度
+## 階段判定
 
-| 階段 | 狀態 | 實際證據與限制 |
+| 階段 | 狀態 | 實測範圍與限制 |
 |---|---|---|
-| E0 | PASS_LOCAL | V0 T01–T10、8 integration、20 policy comparisons 通過；原 50 項結果保留 |
-| E1 | PASS_SCOPED | DCLX 原生匯入 6 PASS；安全與來源反例保留 |
-| E2 | PASS_SCOPED | 8 cases／7 formats 共用 bundle、fresh guarded reload、chunk／citation／tamper PASS；PDF 另用封存模型 |
-| E3 | PASS_SCOPED | 19 source-fact assertions、8 converter/binding checks 及 exact facts／citation／ACL／stale／tamper PASS；無法綁定者保留 unresolved |
-| E4 | PASS_SCOPED | 歷史不重解析遷移 17 項、既有 reparse 13 項 PASS；保留修訂／adoption／作者／時間，不偽造核准 |
-| E5 | PASS_SCOPED | 真 API 與隔離 PostgreSQL PASS；外部 archive 已接共同 metadata background，保留衍生提示，不重解析 |
-| E6 | PASS_SCOPED | UI 核准後真 native index drain，Serving 為同一修訂；embedding 合成，不宣稱 live RAG 品質 |
-| E7 | PASS_UI_10_AND_CACHE_5 | Chrome 混批編輯／重載／匯出／核准／Serving PASS；45 頁實際拖曳與按需快取 PASS |
-| E8 | PASS_ISOLATED_SCOPED | 候選版仍 quarantine；已有相容／降版／回退 probes，未宣稱正式升級 |
-| E9 | RUNNING_NOT_READY | 第二輪 22 步 fresh-process 驗證全部 PASS；最終 commits／manifest／全部 gates 待完成 |
-| E10 | NOT_AUTHORIZED | 正式服務、DB、Index、流量沒有切換 |
+| E0 | PASS_LOCAL | 原基準與失敗證據保留；不宣稱全 regression 綠燈 |
+| E1 | PASS_SCOPED | DCLX 原生匯入與安全反例 |
+| E2 | PASS_SCOPED | 共同 bundle、官方 JSON 重載、資產／chunks／引用；PDF 使用獨立封存 profile |
+| E3 | PASS_SCOPED | Office facts、精確來源、唯一綁定、ACL／stale／tamper；unresolved 拒絕猜測 |
+| E4 | PASS_SCOPED | 隔離遷移／回退／崩潰恢復；完整唯一事件可重播，不代表所有 legacy 路徑 parity |
+| E5 | PASS_SCOPED | 真 API、共同 metadata／審核流程；外部 MCP transport 為合成，不是 live converter 驗收 |
+| E6 | PASS_SCOPED | 核准同版 Index／Serving、拒答與故障回退；embedding 合成，不代表 relevance 品質 |
+| E7 | PASS_UI_SCOPED | Headed Chrome 10 項、45 頁按需快取 5 項；Original Viewer 判定見下文 |
+| E8 | PASS_ISOLATED_SCOPED | 相容／降版／回退 probes；候選 reader 保持 quarantine |
+| E9 | NOT_READY | 最終 RC 本機隔離 CI 22/22 PASS；發布阻擋仍保留 |
+| E10 | NOT_AUTHORIZED | 正式服務、DB、Index、流量均未切換 |
 
-## 本次修正與證據
+## 本輪實際成果
 
-官方 DoclingDocument 是唯一共同內容母本。Markdown、Viewer、DTO、chunks 是投影；Office facts 與治理事件旁掛，沒有重建 DS 2.0。
+官方 DoclingDocument 是唯一共同母本，Office facts／治理事件旁掛。MD、DTO、Viewer 和 chunks 是投影，新入口不重建 DS。
 
-圖片摘要與文字、表格共用一次 transaction／adoption／版本檢查。錯誤圖片 SHA／頁碼／ordinal、過期版本或第三次 adoption 故障均整批拒絕或回滾，獨立檢查通過。PictureItem 重複當空文字顯示的問題已修正，圖片依來源順序顯示一次。
+四個本地 commits 已落實產品遷移、驗證／CI／manifest工具、raw fixture 排除，以及四個必要 SQL migrations。固定 RC 後實際啟動本機隔離 CI job `local-fd8dae3e177c437e9a4c04cdce5598b3`：22 PASS、0 FAIL、0 required SKIP、exit 0，source／inputs 未變。Main 另核49項子收據與雜湊。這是實際本機 job，遠端 GitHub Actions 為 NOT_TESTED。
 
-Chrome 完整流程 10 項 PASS：文件／區塊視角、邊界、混批儲存、重載、同版本 chunk、HTML 匯出含圖表與摘要、UI 核准及 Serving 相同修訂。45 頁拖曳與快取 5 項 PASS：初始只取第一個 20 頁視窗，拖到第 25、45 頁才取後續視窗；共三次 unique 請求，返回不重取。
+原50項在同RC另外重跑：49 PASS／1相同既有PPTX digest FAIL，50個 test ID／failure signature／三Golden hashes與原基準一致。未接受此失敗作為發布 waiver。回歸使用明列既有 pytest/site profile，不冒稱 clean-room。
 
-外部 ZIP／DCLX 現在從已綁定母本執行共同 metadata background，保留領域／衍生提示／提交者。ZIP 唯一完整 enhanced MD 的轉換與來源校驗共用選取規則，原 ZIP bytes／inventory 不變。新增 targeted 28 tests、external ASGI 6 checks PASS。
+Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載、同版chunk、含圖表HTML匯出、核准與Serving一致。45頁5項涵蓋實際拖曳、三個20頁視窗及返回快取。隔離PostgreSQL migrations／26 checks、自有server停止、DS退休18項與新業務路徑DS loaded0通過。
 
-原始 50 項最新 **49 PASS／1 個既有 PPTX digest FAIL**；逐項與基準一致，Golden 檔案雜湊未變。此前新增七個失敗已修復且原證據保留，未放寬斷言製造全綠。此回歸使用既有 pytest 與明確原生套件路徑，不冒稱 clean-room。
+原始 DCLX Viewer 手動檢查曾在隔離站點出現 404，已確認是測試站點缺少資產掛載。只補隔離部署後，實際 Chrome 5 項通過：原件橋接 SHA 相等、同 origin 200、45 頁解析與第 1／45 頁呈現。此測試使用 headless Chrome 合成來源，不宣稱 OCR、schema 編輯或 Viewer 匯出已驗收。
 
-真隔離 PostgreSQL 48 migrations／26 checks PASS；metadata abort／failed-state／retry 有反例。DS 正式依賴退休 18 項 PASS。原附件 MCP ZIP、CLI ZIP、MCP DCLX 分別驗 bytes／inventory／converter/source pin／SQL lineage。98 個原始 wheel 的 API clean runtime 路徑／版本／pip check PASS。
+實際 source RC ZIP 與含部署描述檔的交付 ZIP 已產生並解包核對。Main 與獨立覆核確認 904 個 source/test 檔案的 Git blob／SHA／ZIP bytes 一致，16 個描述檔 hash 相符，四個必要 migrations 完整，沒有不安全或重複路徑。包只包含程式、測試與部署元資料；執行仍需另外佈建核准的依賴與模型，不能當成已完成 PDF clean rebuild。
 
-## 尚未完成
+## 尚未關閉的發布條件
 
-- 首輪完整 22 步為 17 PASS／5 FAIL，source/input 未變且無 skips，原結果保留。Serving verifier 的 lifecycle 預期應保留 `draft`，不是審核 `reviewed` 狀態；修正後三 transport 各 11 checks PASS。索引 fixture 的零面積 table span、SQLite adapter 與缺 backend 欄位修正後 7/7 PASS。PDF verifier 改用 guard 已建立的 Windows 事件迴圈，沒有放寬網路 guard；schema-valid metadata fixture 的真 PDF API 重驗 PASS。第二輪完整 22 步已全部 PASS，exit code 0，無必要 skips，source_changed=false、inputs_changed=false；22 份子 receipt 的 SHA256 與統一 receipt 一致。
-- 封存 PDF 的 submit → Review → approval → index PASS，未弱化重載 Gate。84 個來源套件原盤點有 62 個 wheel；擴充本機搜尋補找到四個相容候選，仍缺 18 項。全離線 clean rebuild 未完成，未下載或重包。
-- Windows 長圖片輸出路徑曾失敗，短路徑對照 PASS。限制与原 FAIL 保留，未宣稱不限路徑長度。
-- 170 欄矩陣為 AUDIT_COMPLETE_WITH_GAPS，0 欄被宣稱逐欄 parity-certified。
-- 真 corpus／live LLM 品質、實際 CI job、最終 feature commits／manifest／release gates 待完成。
+- 封存 PDF 真 parser 入庫到 Index／Serving已通過，但clean offline rebuild仍BLOCKED_EXTERNAL。84套件原profile有66原始wheel、18缺失，其中15為selected runtime必備，另3為原exact profile額外項。沒有下載、重包或捏造來源SHA。
+- 170欄最終j1責任矩陣保留19具名bounded assertions、151未逐欄歸屬、29 R1 unresolved、0完整legacy parity認證；補31項限定證據候選，另120尚無此輪個別歸屬。這些不是151個已確認壞功能，也不能全轉成IT需求。
+- 真實代表性corpus／live LLM／RAG relevance與groundedness、正式規模效能未測。合成embedding／fail-closed反例不能替代品質驗收。
+- 原PPTX digest失敗仍未解除。Windows深圖片路徑原FAIL保留，短路徑控制PASS不代表無上限相容。
+- 歷史任意revision/adoption映射未保證；無法唯一對應者只讀隔離，不偽造Verified Evidence。
 
-## 授權與同步
+## 交付與授權
 
-E0–E9 工程持續已授權。正式切換與不可逆資料處置仍需另行授權；沒有公開公司程式、原文件、私人路徑、logs 或秘密。
+完整逐Gate報告、RC checklist、有限Open Issues、離線套件缺項矩陣與canary／rollback程序保留本地。source包不包含原件、wheels、模型、資料庫或秘密，執行需依hash-pinned profile另行佈建。切換前先驗一致性備份可恢復，再canary／shadow index／CAS alias；錯引、ACL或事件丟失即停止擴大並保留增量事件。
 
-產品 Gate 與同步分開判定。本次先以 Chrome 讀回既有公開檔並核對內容，再使用線上編輯更新；不使用 git 或檔案上傳，不以同步完成推論工程已可發布。
-
-本次 E9 closure：原生功能與驗證工具已有兩個本地 commit。RC 原50重跑49 PASS／1相同已知PPTX FAIL，三次工具profile失敗證據保留。新增 headed Chrome完整流程10 PASS。CI wrapper已補獨立歷史50個test ID、failure signature與三Golden SHA核對，正向與替換失敗內容／test ID反例通過；尚未宣稱實際CI job或新RC完整22步通過。170欄責任補齊，其中19欄有具名斷言，151欄仍缺逐欄驗證，29項R1 BLOCKED未裁定。PDF84列缺項矩陣已完成，18缺wheel含15必要runtime依賴；沒有下載或偽造clean rebuild。
+沒有公開公司程式、原件、私人路徑、內部logs或憑證。本檔只透過國基Chrome線上編輯與Raw全文讀回同步，不使用git／push／檔案上傳。E10正式操作仍需另行核准。
 
