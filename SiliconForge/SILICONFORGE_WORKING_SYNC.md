@@ -11,10 +11,10 @@ last_progress_at_utc: 2026-11-07T08:04:27.510Z
 mission_state: SPEC_PUBLISHED_AWAITING_CODING_AGENT
 milestone: M0
 current_owner: UNASSIGNED_CODING_AGENT
-latest_baseline_commit: SEE_GIT_HISTORY
+latest_baseline_commit: 5d6bec277cbb1952b183ac2bb07230ab547708b5
 latest_agent_commit: null
 latest_pr: null
-tests_reference: {passed: 25, failed: 0, kind: MOCK_A0_ONLY}
+tests_reference: {passed: 25, failed: 0, kind: MOCK_A0_ONLY, source_archive: source/A0_REFERENCE.tar.xz}
 tests_real_runtime: {passed: 0, failed: 0, not_run: 16}
 tests_real_harness: {passed: 0, failed: 0, not_run: 14}
 tests_real_eda: {passed: 0, failed: 0, not_run: 16}

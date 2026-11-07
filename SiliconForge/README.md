@@ -20,6 +20,18 @@
 * EDA 環境由專職 Environment Owner 管理。Simulation、Formal、Netlist、PPA 的結果必須是同一 Fingerprint 的可重現證據。
 * 零有效進展、重複失敗、框架擴張、預算／工具權限越界時必須停止，保留原因和 PDCA 資料。
 
+## A0 可執行參考程式
+
+[source/A0_REFERENCE.tar.xz](source/A0_REFERENCE.tar.xz) 含 `reference/`、`tests/` 原始碼，SHA256 為 `ce9de1df5b4fcc589267f953fdd99b5d0badababb46805796db6934dd43cb450`。在專案目錄執行：
+
+```bash
+tar -xJf source/A0_REFERENCE.tar.xz
+python -m pip install -r reference/requirements-dev.txt
+python -m pytest -q tests
+```
+
+參考 Kernel 是 Mock A0，並非真實 Harness、MCP 或 EDA 成果。
+
 ## 文件與目前狀態
 
 [整合規格（完整 00–10 章）](spec/SiliconForge_v3_0_Full_Implementation_Spec.md)，[詳細的事件生命週期](docs/02_EVENT_RUNTIME_PROTOCOL.md)，[Owner P-Stack 規格](docs/03_OWNER_PSTACK_EDA_WORKFLOWS.md)，[MCP／Harness](docs/04_HARNESS_MCP_HUMAN_INTERFACE.md)，[Dashboard／PDCA](docs/05_OBSERVABILITY_PDCA_AND_DASHBOARD.md)。
