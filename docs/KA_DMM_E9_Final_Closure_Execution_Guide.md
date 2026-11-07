@@ -89,7 +89,7 @@
 
 * Main 在執行前讀取 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md) 的最新版本與 GitHub SHA，並使用唯一同步檔，不建立第二份。
 * ACTIVE 時至少每 60 分鐘更新一次；重要 Gate、錯誤恢復、阻擋與 Engineering Complete 即時更新。同步檔由**Coding Agent Main** 透過 SHA 條件更新，Sub 不直接修改。
-* 必須提供 updated_at_utc、last_progress_at_utc、mission_state、active_stage、E0～E10、stage_gate、engineer­ing_release_status、可用能力、Passed／Failed／Skipped（附來源／引用結果的驗證範圍）、Blockers、自主修復、next_action 與 requires_user_action。遇到未更新或同步失敗不得宣稱已同步。
+* 必須提供 updated_at_utc、last_progress_at_utc、mission_state、active_stage、E0～E10、stage_gate、engineering_release_status、可用能力、Passed／Failed／Skipped（附來源／引用結果的驗證範圍）、Blockers、自主修復、next_action 與 requires_user_action。遇到未更新或同步失敗不得宣稱已同步。
 * 只上傳去敏摘要。私有 KA 原始碼、公司文件、真實原件、內部測試日誌、路徑、憑證和秘密不得公開。
 * Main 不需等 ChatGPT 再發下一輪指令；**直接完成 E9 Final Closure**，最後一次性提交可執行 Release Candidate 與真實判定。
 
