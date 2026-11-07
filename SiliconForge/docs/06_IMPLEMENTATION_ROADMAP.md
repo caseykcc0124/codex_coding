@@ -73,3 +73,11 @@ M7 的 Dashboard Read Model 可在 M1 開始同步開發，但正式宣稱成功
 ## 6.7 退出條件與交付評語
 
 只有 M0 至 M7 的每個 Required Acceptance ID 都具備可重跑證據，才標記 `ACCEPTED`。如部分完成，狀態必須是 `PARTIALLY_IMPLEMENTED` 並清楚說明缺什麼。任何外部工具不可用時交可操作部署說明、有限證據與準確 Blocker，不可說「全部完成」。
+
+## v3.1 額外必過里程碑，不另開專案
+
+- **M1X**（緊接 M1）：Candidate/Exploration Registry、分支血緣 DAG、同 Role 多 Owner Instance、candidate-scoped Inbox/Outbox/Lease Epoch、Quota/Watchdog 和重啟恢復。以 E01–E08 純 Runtime 測試驗證，須保留 Mock 層級標記。
+- **M3X**（緊接 M3）：真 Git branch/worktree 管理、並發寫入隔離、可信 Job Registry 回投、BranchScoped P-Stack Skill、分支級 MCP 查詢/事件、合併衝突保留。至少 E01–E10、E17、E19 具實際證據。
+- **M6X**（M5–M6 整合）：同 Requirement 的 Performance/Low Power/Area 三支候選**真正交錯執行**，每支独立 Simulation／Formal／PPA；一支再 Fork；停止其中一支不影響其餘支線；Pareto 比較、受控選擇/合併，**新 Merge SHA 重跑所有必要 Gate**。完成 E11–E20 和完整負面案例。
+
+詳見 docs/12、docs/13、docs/14。原 M0–M7 不降級；正式 Required 總數 78。Branch Commit 數、Token 活動量、分叉數均不算工程進展。
