@@ -1,4 +1,4 @@
-# SiliconForge v3.0：Autonomous Chip Engineering Framework
+# SiliconForge v3.1：Autonomous Chip Engineering Framework
 
 這是可交付 Coding Agent 的正式規格基準，並非已完成的 Super Agent 或 EDA 平台。
 
@@ -7,7 +7,7 @@
 ## 立即開始
 
 1. 閱讀 [CODING_AGENT_START_HERE.md](CODING_AGENT_START_HERE.md) 及 [AGENTS.md](AGENTS.md)。
-2. 閱讀 [主旨與不可變更原則](docs/00_MISSION_AND_BOUNDARIES.md) 和 [58 項驗收矩陣](docs/07_ACCEPTANCE_MATRIX.md)。
+2. 閱讀 [主旨與不可變更原則](docs/00_MISSION_AND_BOUNDARIES.md) 和 [78 項驗收矩陣](docs/07_ACCEPTANCE_MATRIX.md)。
 3. 依 [工作指令](docs/08_CODING_AGENT_WORK_ORDER.md) 和 [里程碑](docs/06_IMPLEMENTATION_ROADMAP.md) 自主實作 M0 至 M7。
 4. 每 15 分鐘與重大 Gate 即更新 [SILICONFORGE_WORKING_SYNC.md](SILICONFORGE_WORKING_SYNC.md)，附 commit、真實測試數、證據與下一步。
 5. [機器可讀驗收追蹤表](manifests/ACCEPTANCE_TRACKER_TEMPLATE.json) 所有正式 Case 預設 NOT_RUN，必須有真實證據才能標 PASS。
