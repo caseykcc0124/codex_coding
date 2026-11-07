@@ -102,3 +102,9 @@
 ## 7.7 Acceptance Report 格式
 
 最終需提供 `reports/ACCEPTANCE_REPORT.md` 及機器可讀 `reports/acceptance.json`；逐 Case 包含 `id, layer, result, test_command, evidence_sha256, commit, elapsed, notes`。任何 Required Case 未跑、沒有檔案路徑、沒有實際 Runner / Harness 證據，都不得稱總驗收通過。Mock 的 19／19 或瀏覽器 28／28 只是既有示意原型，**不繼承為本版真實整合 PASS**。
+
+## v3.1 E 類強制驗收
+
+原 58 個 A01–D12 Required Cases **完整保留**。新加入 **E01–E20（20 項 Required）**，總共 **78 項**。E 類涵蓋多 Owner 並發、Git Worktree 隔離、血緣再分叉、事件回投、防跨分支證據污染、Pareto、受控 Merge、合併後重新驗證、Watchdog、Spec 改版、Dashboard 與真實多分支 EDA E2E。逐項方法與證據格式見 [13_PARALLEL_EXPLORATION_ACCEPTANCE.md](13_PARALLEL_EXPLORATION_ACCEPTANCE.md)。
+
+`manifests/ACCEPTANCE_TRACKER_TEMPLATE.json` 和 `.csv` 應含全部 78 個 Case。M1X/M3X/M6X Gate 不能被以 Mock 或文件宣告為 PASS；完整驗收必須 78/78 有原始證據與驗證命令。
