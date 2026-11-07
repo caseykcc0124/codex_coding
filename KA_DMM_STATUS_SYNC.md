@@ -8,13 +8,13 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T08:44:19+00:00 |
-| last_progress_at_utc | 2026-11-07T08:44:19+00:00 |
+| updated_at_utc | 2026-11-07T08:53:58+00:00 |
+| last_progress_at_utc | 2026-11-07T08:53:58+00:00 |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 發布精確 wheel 交接 manifest；持續 PPTX 根因與 lineage 欄位驗證 |
+| current_work_item | 精確wheel請求已公開；PPTX身份差異與lineage反例已完成限定核查 |
 | stage_gate | ACTUAL_LOCAL_CI_22_PASS / RELEASE_BLOCKERS_REMAIN |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
@@ -325,3 +325,10 @@ Headed Chrome 10項涵蓋混批文字、表格、圖片摘要、保存／重載�
 ```
 
 沒有原始 wheel filename 或已驗 SHA，所以保留 UNKNOWN；不能用 RECORD hash 代替 wheel hash。`hf-xet` 的 `cp38-abi3-win_amd64` 可供 CPython3.12；`py3-none-any` 是純Python wheel，不能一律改成cp312。協作端先核官方PyPI精確版本、Requires-Python、tags、license與實際SHA；若精確版本不存在，明確回報，禁止替版。GitHub一般Repo不作未審查大型二進位庫，實際交付另核准傳輸通道。只有收到原始wheels並完成全新offline install及PDF既定Gate，才能解除BLOCKED_EXTERNAL。私有metadata來源證據只留本地。
+## 本輪無依賴工作追加結果
+
+PPTX digest 已在固定來源上重現，parser／planner身份版本與recipe是主要差異；兩次限定執行的單一legacy entry內容一致。舊expected digest的完整生成輸入未保存，所以不能宣稱Golden原錯、不能以換hash或回退真實planner身份製造PASS。原50項的已知FAIL與未批准waiver保持原狀，需找回完整舊輸入或由既定Gate批准版本契約遷移；此結論不代表所有PPTX/RAG品質已測。
+
+10個parser lineage欄位補上owner／consumer與實證歸屬，另實跑1正向control、5個parser/package/recipe/weights篡改反例，現有pinned recipe/package與bound prepared manifest路徑拒絕變更。完整自洽重封存資料可通過raw bundle結構／checksum驗證，原bound manifest digest則拒絕它；不把這項當獨立核准模型政策通過。模型內容讀取、網路與DS均為0，RC/profile/原j1證據未變，170parity仍未完成。
+
+Main已讀實際receipt／exit code並核對RC未變。上述只是追加限定證據，不重封原RC、不改Golden、不更新已pin部署profile，也不啟動E10。外部協作端可先依上方18項精確清單核實PyPI可用性／許可／SHA；取得清單不是binary交付或offline rebuild。
