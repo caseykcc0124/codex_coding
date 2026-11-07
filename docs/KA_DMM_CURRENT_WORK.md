@@ -4,6 +4,12 @@
 > **唯一最新的完整執行授權**：[KA-DMM Autonomous End-to-End DS Replacement Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)  
 > 狀態：**E9 Final Closure 已發布，Coding Agent 應在既有 KA 專案持續執行至 Engineering Complete／Ready for Release 的真實 Gate。E10 正式切換未授權。**
 
+## 最高優先：E9 最終驗收凍結與強制結案（立即生效）
+
+**Coding Agent Main 必須先讀取並立即執行：[KA-DMM E9 最終驗收凍結與強制結案命令](./KA_DMM_E9_Terminal_Acceptance_Freeze.md)。** 這是使用者針對本輪 E9 的最新明確要求，優先於下文所有允許持續擴充測試、額外探索、增加 Gate 或反覆驗收的建議。原 Mission v2.0 的正式環境邊界與不得偽造 PASS 規則保留。
+
+請凍結已有驗收清單，不得自行增加新測試或新工作包。**立即以最新 Office source-lineage 修復後的 successor Commit**執行既定 22 步 CI 及原有 50 項回歸，統合既有 clean 84 PDF、Review/Index/Viewer、170 欄必要責任、DS Retirement、回退及 RC 證據。只允許對已存在關鍵失敗做一次最小修復及同集合必要重驗。完成後直接給最終 Gate 判定與 Release Candidate 交付，**停止本輪測試活動，不得自行提出下一批測試**。若真實關鍵 Gate 仍未通過，須如實以 NOT_READY 和有界缺口報告結案，禁止虛報 Engineering Complete；E10 仍需另行授權。
+
 ## 本輪最新執行指令（E9 Final Closure）
 
 **請 Coding Agent Main 優先讀取並執行：[KA-DMM E9 Final Closure：最終工程收斂與發行驗收指令](./KA_DMM_E9_Final_Closure_Execution_Guide.md)。**
