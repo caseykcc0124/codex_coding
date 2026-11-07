@@ -11,19 +11,19 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T02:19:36+00:00 |
-| updated_at_taipei | 2026-11-07T10:19:36+08:00 |
+| updated_at_utc | 2026-11-07T03:18:42+00:00 |
+| updated_at_taipei | 2026-11-07T11:18:42+08:00 |
 | instruction_version | v2.0 |
 | chatgpt_monitor_state | ACTIVE_EVERY_2_HOURS |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
-| active_stage | E2 |
-| current_work_item | 原生 Review/Approval、Office binding、索引與歷史恢復接線 |
-| stage_gate | E0_LOCAL_BASELINE_PASS / E1_NATIVE_IMPORT_SLICE_PASS / E2_BUNDLE_SLICE_PASS |
+| active_stage | E5/E9 |
+| current_work_item | 完整 Review/Approval、外部 UI/MCP、Serving consumer、Viewer 與隔離 API 環境整合 |
+| stage_gate | NATIVE_SOURCE_SLICE_VERIFIED / FULL_API_VIEWER_INTEGRATING |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
-| last_progress_at_utc | 2026-11-07T02:19:36+00:00 |
-| next_action | 整合真實 Review、精確 Office locator 與索引；接續 Viewer、候選版本與 staging E2E |
+| last_progress_at_utc | 2026-11-07T03:18:42+00:00 |
+| next_action | 重驗真實 HTTP 與 UI 閉環、Office sidecar 引用、歷史恢復，再完成 DS 清理與 release 驗收 |
 | requires_user_action | NO |
 | user_action_summary | 無 |
 
@@ -34,15 +34,15 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 | 階段 | 狀態 | 已交付能力或證據摘要 | 下一步 |
 |---|---|---|---|
 | E0 Baseline | PASS_LOCAL | 保存及核對 732 個程式／測試檔並建立本地基線 commit，建立隔離工作樹；本次 V0 T01–T10 全 PASS | 保持基線，驗收新原生來源 |
-| E1 DCLX | PASS_NATIVE_IMPORT_SLICE | Windows MIME 修正後主驗收 6 PASS、0 FAIL、0 SKIP；5 個安全反例拒絕 | 接回真實入口及完整治理 |
-| E2 Sources | PASS_BUNDLE_SLICE | 8 cases／7 formats 共用 bundle、新 process 重載、chunk、local citation 與竄改拒絕通過 | 完整來源 binding、HTTP 與治理尚待驗收 |
-| E3 Office Evidence / Anchor | IMPLEMENTING | 來源 evidence slice 主驗收 19 PASS；真實 converter binding 尚未驗收 | 接通 selector 與 unresolved 反例 |
-| E4 Persistence / Migration | IMPLEMENTING | 版本化 canonical 與既有事件儲存接線中；歷史遷移未驗收 | 原生 snapshot 與歷史 dry-run |
-| E5 Review / Effective | IMPLEMENTING | 原生治理 slice 主驗收 3 PASS；完整 Review caller 尚未接通 | 保留既有 metadata、角色與核准業務 |
-| E6 Chunk / RAG / Index | IMPLEMENTING | 原生 approved snapshot 與隔離檢索接線中，尚未驗收 | 驗證 exact revision 與引用 lineage |
-| E7 Viewer / DocLang | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
-| E8 Upstream Compatibility | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
-| E9 Engineering Release Candidate | NOT_STARTED | 尚無本輪同步證據 | 依指引 |
+| E1 DCLX | PASS_NATIVE_IMPORT_SLICE | 原生匯入 6 PASS；獨立審查發現 3 個完整性缺陷，修正反例 8 PASS；官方及未知 QName 分開處理 | 完整 API/Viewer 驗收 |
+| E2 Sources | PASS_BUNDLE_SLICE | 最新 8 cases 共用 bundle／fresh process／chunk／local citation 全 PASS；含 Office sidecar，部分來源 facts 明確 unresolved | 真實外部與一般入口整合 |
+| E3 Office Evidence / Anchor | IMPLEMENTING | 主驗收 19 source fact assertions、8 真實 converter/binding checks PASS；已接 bundle，未外推所有 Office 保真 | consumer 精確 locator 與部分 unresolved 處理 |
+| E4 Persistence / Migration | PASS_RECOVERY_SLICE | 官方 exclusive span 修正後主驗收 13/13 PASS，含真實 SQLite apply/crash/rollback/備份恢復 | 已批准/adoption 歷史精確重播仍 unresolved/read-only |
+| E5 Review / Effective | IMPLEMENTING | 真實 ASGI submit/prepare/edit/approval 驗收進行中；虛擬顯示頁、圖片 URI、span 與 freshness 契約逐項修正 | 完成真實 HTTP 閉環 |
+| E6 Chunk / RAG / Index | PASS_ISOLATED_SLICE | 7 個隔離索引案例 PASS；embedding stub，未宣稱 live RAG 品質；preview 設定共用修正中 | 完整 serving consumer 與端到端引用 |
+| E7 Viewer / DocLang | IMPLEMENTING | HTML/MD/DCLX exporter slice 3 PASS，含圖片/表格/編輯與來源不變；完整 UI 未驗收 | Original/Effective UI 與衝突測試 |
+| E8 Upstream Compatibility | PASS_ISOLATED_SLICE | 19 個矩陣/回退 probes 通過，其中 6 unit；候選版仍 quarantine，維持 baseline | 完整治理/Viewer 恢復與 CI 整合 |
+| E9 Engineering Release Candidate | IMPLEMENTING | 已盤點並修正新入庫與 Serving 的舊 DS 依賴；CLI/MCP client 本身為 HTTP consumers | 全流程零 DS、clean runtime、獨立審查與 release bundle |
 | E10 Production Cutover | NOT_AUTHORIZED | 需正式環境授權 | 不得自行切換 |
 
 ## 本次新增的可用功能
@@ -60,11 +60,11 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 
 ## 當前阻擋與自主修復
 
-本次原 50 項回歸仍為 49 PASS、1 項既有 PPTX digest FAIL；沒有新增回歸，未更改 Golden。DCLX URI、MIME 與內嵌圖片 bundle 問題已修正並重驗，無需使用者介入。完整歷史遷移、治理、Index、Viewer、候選版本尚未驗收。
+獨立審查發現來源錯綁、無效 inline image 與未知 namespace 內容丟失，已修正並以 8 項反例/控制驗證。其後保留有效官方 namespace，原 DCLX 6 項重驗 PASS。Office metadata 經官方 model validation 正規化後，共用 bundle 8 項亦全 PASS。完整 Review/Serving/UI、歷史已批准修訂精確重播及正式 RAG 品質仍未驗收。原 50 項回歸保留 49 PASS、1 unchanged PPTX FAIL，未改 Golden。
 
 ## 下一個交付里程碑
 
-下一個里程碑為真實提交、原生 Review／Effective／Approval、精確 Office evidence 與索引整合，再推進 Viewer 和歷史恢復。
+完成一般與外部提交 → native Review/Effective/Approval → 索引 → Serving/Viewer 的真實 API/UI 閉環，再跑恢復、回歸與 DS 依賴清理。
 
 ## 需要使用者決策的事項
 
@@ -93,3 +93,5 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 本次主驗收補充。來源轉換 raw HTML 圖片缺口已修正並重驗；Office 圖片保真未測，沒有外推為全格式通過。E1 修正後主驗收通過，失敗原始證據仍保留。所有局部 PASS 均非完整 E0～E9 完成。
 
 共用 bundle 本次重驗。8 個來源案例皆通過，包含內嵌圖片儲存、新 process 受 DS/socket guard 重載、決定性 chunk、引用來源／snapshot hash、拒答與來源竄改拒絕。DCLX 原有 6 項驗收在來源擴充後仍 PASS。這是本地工程證據，未宣稱正式 RAG 品質或完整 Office 保真。
+
+本次整合狀態。前述 PASS 均限定其實際隔離 slice，完整 E0～E9 尚未完成，正式服務/DB/Index 未切換。HTTP 測試目前明確記錄混合依賴環境，另一個隔離 API 環境正在建立，沒有將它冒稱 clean-room 驗收。所有失敗及修正證據留在本地。
