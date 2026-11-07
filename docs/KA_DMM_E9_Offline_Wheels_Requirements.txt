@@ -1,0 +1,22 @@
+# KA-DMM E9 RC 54745fd733e52744c9b5728bcbbc91d337ecdbbc: 18 exact PyPI distribution versions
+# Public dependency metadata only. Platform: Windows x64, CPython 3.12.
+# 15 runtime packages; pip, pypdf, soupsieve are exact-profile extras.
+# This is NOT the complete 84-package lockfile.
+accelerate==1.15.0
+docling-ibm-models==4.0.3
+docling-parse==7.22.2
+filelock==4.1.1
+hf-xet==1.7.0
+huggingface-hub==1.33.0
+markupsafe==3.0.4
+mpmath==1.3.0
+pandas==3.0.6
+pip==23.2.1
+pypdf==6.20.0
+setuptools==84.0.0
+soupsieve==3.0.2
+sympy==1.14.0
+torch==2.14.1
+torchvision==0.29.1
+transformers==5.19.0
+tzdata==2026.5
