@@ -1,73 +1,45 @@
 # KA-DMM：Coding Agent 固定工作入口
 
-> 更新日期：2026-11-07  
-> **唯一最新的完整執行授權**：[KA-DMM Autonomous End-to-End DS Replacement Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)  
-> 狀態：**E9 Final Closure 已發布，Coding Agent 應在既有 KA 專案持續執行至 Engineering Complete／Ready for Release 的真實 Gate。E10 正式切換未授權。**
+> 更新日期：2026-11-07
+> **當前執行階段：E10 Production Acceptance／Readiness。**
+> E9 已完成隔離工程並宣告 `ENGINEERING_COMPLETE / READY_FOR_RELEASE`。此階段**不重開 E9，不自行新增測試，也不自行執行正式部署**。
+> 原始完整授權與安全界線仍依 [Autonomous Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)，其中第 10 節的正式環境與不可逆操作必須明確核准。
 
-## 最高優先：E9 最終驗收凍結與強制結案（立即生效）
+## 最新最高優先執行指令：E10
 
-**Coding Agent Main 必須先讀取並立即執行：[KA-DMM E9 最終驗收凍結與強制結案命令](./KA_DMM_E9_Terminal_Acceptance_Freeze.md)。** 這是使用者針對本輪 E9 的最新明確要求，優先於下文所有允許持續擴充測試、額外探索、增加 Gate 或反覆驗收的建議。原 Mission v2.0 的正式環境邊界與不得偽造 PASS 規則保留。
+**Coding Agent Main 現在必須讀取並自主開始執行：[E10 Production Acceptance 與受控 Cutover 執行指令](./KA_DMM_E10_Production_Acceptance_and_Cutover.md)。**
 
-請凍結已有驗收清單，不得自行增加新測試或新工作包。**立即以最新 Office source-lineage 修復後的 successor Commit**執行既定 22 步 CI 及原有 50 項回歸，統合既有 clean 84 PDF、Review/Index/Viewer、170 欄必要責任、DS Retirement、回退及 RC 證據。只允許對已存在關鍵失敗做一次最小修復及同集合必要重驗。完成後直接給最終 Gate 判定與 Release Candidate 交付，**停止本輪測試活動，不得自行提出下一批測試**。若真實關鍵 Gate 仍未通過，須如實以 NOT_READY 和有界缺口報告結案，禁止虛報 Engineering Complete；E10 仍需另行授權。
+使用者已授權**開始 E10 工作**。這涵蓋 E10.1 的本地／隔離／已授權 staging 準備、Release Baseline 與部署包驗證、共同服務配置 Inventory、原有 Production Acceptance Criteria、Cutover／Rollback Runbook 和一次完整的使用者授權包。**它不代表已授權真正的 Production DB／Index／服務／流量、正式資料備份、正式資料讀寫、不可逆刪除或正式共同服務變更。**
 
-## 本輪最新執行指令（E9 Final Closure）
+Main 自行推進全部現有授權的 E10.1 項目，使用既定 Git Commit、測試與驗收契約，主動接收 Sub Agent 成果，勿因缺少正式生產權限而停止其他可執行準備工作。不必逐批向 ChatGPT 索取指令。
 
-**請 Coding Agent Main 優先讀取並執行：[KA-DMM E9 Final Closure：最終工程收斂與發行驗收指令](./KA_DMM_E9_Final_Closure_Execution_Guide.md)。**
+當 E10.1 Ready 時，在唯一同步檔公布**去敏 Cutover Authorization Packet**：明確 RC Commit、待核准環境／操作、備份恢復、真實品質與共同服務 Gate、Canary 流量及寫入比例、Alias 切換、Rollback Trigger、風險與建議。只有取得使用者對**特定正式動作**的明確授權後，才可依 E10 指令執行 E10.2 與 E10.3；未授權不得冒稱已完成 E10 或偷渡正式存取。
 
-本 E9 指引是 [Autonomous Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) 之實施細則，不重新授權 E10，也不更改正式環境安全界線。Main 必須接續既有 E0～E8 局部 PASS 與 22 步整合結果，完成 Feature Commits、Manifest、全離線 PDF 重建、真 CI、170 欄產品責任、DS 退休驗證、最終 Release Gates 與可重跑交付包。不得重頭另建專案、逐項等待 ChatGPT 或以狀態檔摘要代替產品驗收。
+## 已完成工程基線（僅作歷史參考）
 
-請從 main 取得兩份指令檔的實際 GitHub Commit／Blob SHA，並讀取既有本地 KA 工作樹與 receipts 以取得真實最新狀態。持續依下節只更新根目錄唯一去敏同步檔，不得將內部工程資料推送公開。
+* E9 最終私有 Release Commit：`fb1aa0e6dc9da4fedcd285ea2471dff230f862ad`。
+* 公開 E9 最終狀態及測試結果：[KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)；依最新讀到的 GitHub 狀態為準。
+* E9 凍結驗收指令：[KA_DMM_E9_Terminal_Acceptance_Freeze.md](./KA_DMM_E9_Terminal_Acceptance_Freeze.md)，**已執行完畢，非目前優先指令**。
+* E9 Final Closure：[KA_DMM_E9_Final_Closure_Execution_Guide.md](./KA_DMM_E9_Final_Closure_Execution_Guide.md)，已完成。
+* [E9 公開離線 Wheel 交接指引](./KA_DMM_E9_Offline_Wheel_Acquisition_Handoff.md) 與 [18 項精確套件版本清單](./KA_DMM_E9_Offline_Wheels_Requirements.txt)，供可重建性追溯。
+* [E9 公開 Wheelhouse Workflow](../.github/workflows/ka-dmm-e9-wheelhouse.yml) 屬發行依賴輔助流程，不可代替已完成的隔離工程及新的生產驗收。
 
-## 離線套件阻擋處理：立即生效
+不得將舊 E9 文件的「立即執行」、「NOT_READY」、「缺18件 Wheel」等歷史敘述誤認為現在的任務狀態；應以最新 `KA_DMM_STATUS_SYNC.md` 最終 E9 區段與實際私有 receipts 為準。
 
-**使用者已要求由 ChatGPT 協助取得可公開且授權的缺失 Wheel，Coding Agent 不需等待總指令。** 請 Main 立即讀取：[E9 離線 Wheel 取得與交接指引](./KA_DMM_E9_Offline_Wheel_Acquisition_Handoff.md)。
+## 強制單一 GitHub 去敏狀態同步
 
-目前公開摘要只有 18 件缺失數量（15 件 runtime 必需、3 件 exact profile 其他項），尚無可用於正確下載的套件名稱／精確版本／目標 Python ABI／Windows tags。請立即依指引，將**允許公開的 PyPI 缺件清單**加入唯一的 `KA_DMM_STATUS_SYNC.md`，保留資料保護限制與所有現有欄位。同時持續 170 欄產品歸屬、PPTX 回歸、歷史映射、Release Gates 等其他無依賴工作。
+**唯一檔案：公開 main 分支根目錄 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。** 不新增第二份公開進度文件，不覆蓋 E9 的已保存失敗與完成證據。
 
-公開 GitHub 一般 Repo 不得直接當作未審查第三方大型二進位套件倉庫。二進位交付必須先驗 license、hash 和可用傳輸通道；來源清單或 README 不能代替真正 offline rebuild PASS。不准私自繞過網路限制、發布受限 wheel 或執行 E10。
+1. Main 啟動 E10.1 時，實際讀取本入口與 E10 指令的 GitHub Commit／Blob SHA，在現有狀態檔加入 `instruction_version=v2.0 / E10`、`active_stage=E10_PRODUCTION_READINESS`、現有 RC SHA、`production_status=NOT_AUTHORIZED`、當輪工作、下一個 Gate 和 requires_user_action；不能未執行就宣稱 ACTIVE／PASS。
+2. ACTIVE 期間至少每 60 分鐘更新一次；Gate 改變、重大風險、E10.1 Ready、要求 Cutover 授權、正式切換進展、Rollback 或 Production Complete 時即時更新。Main 唯一寫入，Sub 交付 Main。讀取現有 blob SHA 後條件式提交，衝突重讀合併，不得強制覆蓋。
+3. 必須區分「已規劃」「本地已實測」「staging 已實測」「Production 已實測／尚未授權」，提供真實 Pass／Fail／Not Tested／Blocked、關鍵引用錯誤與 ACL、備份可恢復、Rollback、正式 SLO／檢索品質、next_action、requires_user_action 與適用 Release Commit。無新能力不要假裝進展。
+4. 公開只寫去敏摘要。私有 KA 程式、公司文件、fixtures、完整 logs、密鑰、內部 URL／路徑、模型、資料庫及真實文件不推送 GitHub；沒有合法權限不新增外網連線或取得秘密。
+5. ChatGPT 既有定時監督繼續比較此檔與 commit 歷史，只有重大進展、Gate 變化、授權需求或 ACTIVE 超過三小時未更新才通知使用者。陳舊不等於 Agent 停止或產品故障。
 
-## E9 Windows CPython 3.12 Wheelhouse：GitHub Actions 交接
+## 結案標準
 
-18 項公開 PyPI 缺失 Wheel 已有精確下載清單，並新增受控 GitHub Actions 工作流程：
+E10.1 交付：可審閱、可執行的完整 Cutover／Rollback Packet 與已授權隔離環境證據，正式操作仍等待一次精確批准。
 
-* [Exact 18 requirements](./KA_DMM_E9_Offline_Wheels_Requirements.txt)
-* [Wheel verification script](./ka_dmm_tools/verify_public_pypi_wheels.py)
-* [GitHub Actions workflow](../.github/workflows/ka-dmm-e9-wheelhouse.yml)
-* [Workflow Runs 與下載頁面](https://github.com/caseykcc0124/codex_coding/actions/workflows/ka-dmm-e9-wheelhouse.yml)
+E10.2 及 E10.3：只有取得對應正式操作的明確授權，且實際完成 Production 備份、Canary、資料與 Index 受控切換、DS 停寫／必要受控退役、觀察與恢復驗證後，才可宣告 `mission_state=COMPLETE`、`production_status=PRODUCTION_COMPLETE`。
 
-此 Workflow 以 `windows-2022`、CPython 3.12，從公開 PyPI 精確下載 18 個原始 Wheels，不允許自動替代版本，核對官方 PyPI wheel 原始 SHA256 後才上傳 `ka-dmm-e9-18-wheels-cp312-win-amd64` Artifact。**工作流程已提交不等於實際執行成功或檔案已交付**，Main 必須查實 run status、Artifact、18 個 wheel、manifest 與雜湊。若 Workflow 失敗，記錄公開可去敏根因與最小下一步，持續其他 E9 工作。
-
-Main 在已授權環境取得已驗證 Artifact，合併原有本地 66 個 wheels，真實執行 `--no-index` clean offline install 與 PDF→Review→Approval→Index→Serving，存下安裝與 Gate receipts。只有真正下載、SHA、清潔重建與既定測試完成才解除 offline Gate。不得將 artifacts 當成 Production 部署授權，亦不得把公司檔案或私有原件推送到公開 Repository。
-
-## 強制狀態同步
-
-**本總任務執行期間，Main Agent 必須把去敏進度更新至公開 Repository 根目錄的 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。**
-
-- ACTIVE 期間至少每 **60 分鐘**更新一次，WorkItem 開始／完成、Gate 改變、重大阻擋、恢復、Engineering Complete 或需使用者授權時立即更新。
-- 主 Agent 統一寫入。Sub Agent 只回報給 Main，不能各自改檔。
-- 每次更新工作階段、實際已完成能力、測試／證據摘要、當前阻擋及自主修復動作、下一里程碑和授權需求。
-- 預先讀取 GitHub Blob SHA 並做衝突安全更新。寫入失敗不能宣稱同步成功。
-- 公開資訊必須去敏，私有 KA 檔案、公司內容、真實程式碼、測試原文與環境細節一律不推送。
-- ChatGPT 的每兩小時定時巡檢已成功啟用（Automation ID：6aee7c6050408191a82be7b7b92d8954），只在重大進展、需授權或 ACTIVE 狀態超過 3 小時未更新等情況通知使用者；Coding Agent 每小時去敏狀態同步持續照常執行。
-- 完整同步契約以 [自主總任務 v2.0 的 8A 節](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) 為準。
-
-## 給 Coding Agent 的直接指令
-
-請由本公開 GitHub Repository 的指定 Markdown 檔取得完整工作規格，並記錄真正抓取到的 GitHub Commit SHA。
-
-從現在開始，**不必在每個 M2 子批次、Gate 或技術缺口後停止等待 ChatGPT 再發布新指令**。依 v2.0 中 E0 至 E9 的工作路線，在既有 Knowledge Agent Repository 自主完成 DoclingDocument 替換 DS 的全部程式、測試、資料遷移工具、Review/Effective、Chunk/RAG、Viewer、升版相容與 DS 清理，直到達到 Engineering Complete 與 READY_FOR_RELEASE。
-
-前輪 M2-V0 已由使用者回報 PASS。若 M2-V1 已在進行，請先保存既有成果與 Commit，將它納入 E1，**不得推倒重做**；之後直接沿 v2.0 續做全部 E2～E9。
-
-請把阻擋轉成可實作的修復、最小兼容、受控降級或具體外部依賴，不能讓不相關的問題阻止其他模組進展。只有涉及正式環境不可逆操作、未授權網路／權限／秘密或核心架構實質變更時，才需要向使用者要求明確核准。完整規則請以 v2.0 為準。
-
-**禁止**：將私有 Knowledge Agent 原始碼、公司文件或內部測試結果自動推到本公開 Repo；未授權就變更正式 DB／Index、部署或上線。當工程完整、正式切換待授權時，交付可運行的 Release Candidate、回退方案及全部可重跑證據。
-
-## 版本沿革
-
-- v1.2 主計畫：[架構與原始分批 Gate](./KA_DMM_Docling_Native_Migration_Plan_v1.2.md)。
-- M2-V0 v1.3：[已回報 PASS 的原生 PDF Shadow 切片](./KA_DMM_M2_V0_Delivery_Execution_Guide_v1.3.md)。
-- M2-V1 v1.4：[DCLX 工作包，已納入 v2.0 的 E1](./KA_DMM_M2_V1_DCLX_Native_Import_Execution_Guide_v1.4.md)。
-- v2.0：[整體自主工程交付總授權](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)。
-
-若舊文件要求「完成本批即停止、等待下一份 GitHub 指令」，**該限制已由 v2.0 的完整任務授權取代**。舊文件的測試、資料安全、證據與回退義務仍有效。**正式環境變更仍須依 v2.0 第 10 節明確授權**。
+**立即開始 E10.1；不得等待下一份 ChatGPT 指令，也不得自行越過正式環境授權邊界。**
