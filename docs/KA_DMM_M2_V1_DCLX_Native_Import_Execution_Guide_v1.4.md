@@ -1,5 +1,7 @@
 # KA-DMM：M2-V1 原生 DCLX 匯入與證據保真交付指引
 
+> **後續最新總授權已改為 [KA-DMM 自主完成 DS 替換 v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)。本 v1.4 保留為 DCLX 子工作包的詳細工程規格，但「完成即停止等待下輪指令」已不再適用；A 君應完成本子項後直接繼續 v2.0 E2～E9。正式環境變更仍須授權。**
+
 > 文件版本：v1.4  
 > 制定日期：2026-11-07  
 > 適用對象：Coding Agent，執行於既有 Knowledge Agent Repository  
