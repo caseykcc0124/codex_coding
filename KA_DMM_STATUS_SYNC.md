@@ -11,8 +11,8 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T03:18:42+00:00 |
-| updated_at_taipei | 2026-11-07T11:18:42+08:00 |
+| updated_at_utc | 2026-11-07T03:45:43.6933685+00:00 |
+| updated_at_taipei | 2026-11-07T11:45:43.6933685+08:00 |
 | instruction_version | v2.0 |
 | chatgpt_monitor_state | ACTIVE_EVERY_2_HOURS |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
@@ -95,3 +95,12 @@ mission_state 限用：NOT_STARTED、ACTIVE、LOCAL_BLOCKED、EXTERNAL_BLOCKED�
 共用 bundle 本次重驗。8 個來源案例皆通過，包含內嵌圖片儲存、新 process 受 DS/socket guard 重載、決定性 chunk、引用來源／snapshot hash、拒答與來源竄改拒絕。DCLX 原有 6 項驗收在來源擴充後仍 PASS。這是本地工程證據，未宣稱正式 RAG 品質或完整 Office 保真。
 
 本次整合狀態。前述 PASS 均限定其實際隔離 slice，完整 E0～E9 尚未完成，正式服務/DB/Index 未切換。HTTP 測試目前明確記錄混合依賴環境，另一個隔離 API 環境正在建立，沒有將它冒稱 clean-room 驗收。所有失敗及修正證據留在本地。
+
+
+## 最新整合驗收增補
+
+原生 Review/Approval 的真 ASGI API 閉環 10 項 PASS；外部 UI/MCP/CLI 合成入口共 20 項 PASS；Serving 真 ASGI 11 項 PASS，涵蓋權限、版本、原件與圖片綁定。新入庫停用 native 時明確拒絕，不退回 DS。切塊政策已抽離 DS 程式来源，20 項演算法比較一致，受 DS import guard 的 API 閉環 10 項再次 PASS。
+
+UI harness 七項 HTTP 自檢 PASS，含真 approval enqueue 與受控 native indexing；尚待實際 Chrome 畫面驗收。98 個原始 wheel 的離線 clean runtime 安裝成功，clean API 10 項 PASS，套件路徑均在 clean venv，pip check PASS；受 guard 的 DS 匯入與網路嘗試均為 0。PDF 官方模型已完成解析，但原始 picture 未預生成導致序列化時新增 crop，重載內容一致性 Gate 未通過；正在啟用官方 picture generation 重驗，未削弱 Gate。
+
+E4 歷史 canonical 不重解析轉換與 exact adoption mapping、完整欄位責任矩陣、真 PostgreSQL／RAG 與最終 release 驗收仍未完成。工程 NOT_READY，正式切換 NOT_AUTHORIZED。失敗與修正證據均保留本地，沒有公開公司原始內容。
