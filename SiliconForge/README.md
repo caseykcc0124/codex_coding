@@ -46,3 +46,15 @@ tar -xJf source/CONTRACTS_SKILLS_INTEGRATIONS.tar.xz
 本次 GitHub 基準僅發布規格、協定配置、正式驗收資料與交付入口。先前 A0 參考程式在本地測得 25/25 PASS，但**不等於正式 Runtime 或真實 EDA 的驗收**。正式驗收請看 Status Sync。
 
 推送日期：2026-11-07T08:04:27.510Z。同步檔將記錄實際進展；Heartbeat 不視為 Engineering Progress。
+
+## v3.1 必讀：並行探索、多 Owner Instance、Branch Lineage
+
+同一 Domain Role 可以有多個 Owner Instance，同一 Requirement 可同時探索 Performance／Low Power／Area 多條候選並再分叉。每條分支各有 Git worktree、Simulation／Formal／PPA 的原始證據；受控 Merge 後的新 SHA 必須重新驗證。不可讓 Main Agent 仲裁技術方向、不能讓單一 Agent 直接覆寫 Accepted Baseline。
+
+- [12｜並行探索架構與 Git 血緣](docs/12_PARALLEL_EXPLORATION_ARCHITECTURE.md)
+- [13｜E01–E20 強制驗收](docs/13_PARALLEL_EXPLORATION_ACCEPTANCE.md)
+- [14｜實作藍圖與里程碑插入點](docs/14_PARALLEL_EXPLORATION_IMPLEMENTATION.md)
+- [Branch Exploration Policy](config/exploration.yaml)
+- [機器可讀 Exploration Event Contract](manifests/EXPLORATION_EVENT_CONTRACT.json)
+
+**驗收總數：58 個既有 Required + 20 個 E 類 = 78。** 這是正式驗收範圍的擴充，並非測試完成。
