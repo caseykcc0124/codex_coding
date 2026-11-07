@@ -1,4 +1,4 @@
-route_version: routes-v3.0
+route_version: routes-v3.1
 unknown_event: QUARANTINE
 match_order: most_specific_then_priority
 rules:
@@ -13,6 +13,25 @@ rules:
   - {id: ppa_missed, type: PPA.TARGET_MISSED, primary_owner: ppa, subscribers: [], producer_roles: [eda_runner, owner:ppa], priority: 90}
   - {id: env_required, type: ENV.PROFILE_REQUIRED, primary_owner: eda_environment, subscribers: [], producer_roles: [runtime, eda_runner], priority: 90}
   - {id: env_blocked, type: ENV.PROFILE_BLOCKED, primary_owner: eda_environment, subscribers: [], producer_roles: [runtime, eda_runner], priority: 95}
-  - {id: eda_complete, type: EDA.JOB_COMPLETED, primary_owner_from: job_registry.requesting_owner, subscribers_from: job_registry.subscribers, producer_roles: [eda_runner], priority: 85}
-  - {id: peer_request, type: PEER.REQUEST_CREATED, primary_owner_from: peer_request.target_owner, subscribers_from: peer_request.origin_owner, producer_roles: [registered_owner], priority: 85}
+  - {id: eda_complete, type: EDA.JOB_COMPLETED, primary_owner_from: job_registry.requesting_owner_instance_id, subscribers_from: job_registry.subscriber_instance_ids, producer_roles: [eda_runner], priority: 85}
+  - {id: peer_request, type: PEER.REQUEST_CREATED, primary_owner_from: peer_registry.target_owner_instance_id, subscribers_from: peer_registry.origin_owner_instance_id, producer_roles: [registered_owner], priority: 85}
   - {id: human_approval, type: HUMAN.APPROVAL_RECORDED, primary_owner_from: approval_registry.waiting_owner, subscribers: [], producer_roles: [human_gateway], priority: 100}
+
+  # v3.1 Exploration Graph service is a deterministic runtime service, not a LLM arbitrator.
+  - {id: exploration_requested, type: EXPLORATION.REQUESTED, primary_owner: exploration_service, subscribers: [], producer_roles: [human_intent_gateway, owner:spec, owner:ppa], priority: 90}
+  - {id: branch_fork_requested, type: BRANCH.FORK_REQUESTED, primary_owner: exploration_service, subscribers: [], producer_roles: [registered_owner], priority: 85}
+  - {id: branch_candidate_ready, type: BRANCH.CANDIDATE_READY, primary_owner_from: branch_registry.verification_owner_instance_id, subscribers_from: branch_registry.formal_ppa_owner_instance_ids, producer_roles: [owner:rtl], priority: 95}
+  - {id: branch_evidence_ready, type: BRANCH.EVIDENCE_READY, primary_owner_from: branch_registry.requesting_owner_instance_id, subscribers_from: branch_registry.comparison_subscriber_instance_ids, producer_roles: [eda_runner], priority: 85}
+  - {id: branch_blocked, type: BRANCH.BLOCKED, primary_owner: exploration_service, subscribers: [pdca], producer_roles: [runtime, registered_owner], priority: 90}
+  - {id: branch_merge_proposed, type: BRANCH.MERGE_PROPOSED, primary_owner: git_merge_service, subscribers: [integration], producer_roles: [owner:ppa, owner:spec, owner:integration], priority: 95}
+  - {id: branch_merge_reverify, type: BRANCH.MERGE_REVERIFY_REQUIRED, primary_owner_from: branch_registry.merged_verification_owner_instance_id, subscribers_from: branch_registry.merged_formal_ppa_integration_instance_ids, producer_roles: [git_merge_service], priority: 100}
+
+# v3.1 required resolver preconditions: branch_registry and job_registry are trusted,
+# never resolve owner_instance_id from unverified event payload.
+owner_instance_resolution:
+  require_registry_match: true
+  require_exploration_and_branch_id: true
+  owner_role_is_not_instance: true
+  prohibit_cross_branch_fallback: true
+  unknown_branch_action: QUARANTINE
+  same_candidate_evidence_only: true
