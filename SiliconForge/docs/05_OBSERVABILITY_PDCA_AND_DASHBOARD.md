@@ -57,3 +57,7 @@ PDCA Owner 只有提案與隔離實驗權限，不可自行修改運行中的 Ro
 從一個 `SIM.REGRESSION_FAILED` 在 Dashboard 點開，應能看到：收到來源、Router 規則版本、Verification Owner 認領、使用的 Skill、失敗 Reproducer、Peer Request 目標 RTL、RTL Candidate SHA、EDA Run 的環境 Digest 與結果，以及 Integration 的最終接受或阻擋理由。重啟 Backend 後，這些關聯仍完整。
 
 在「無效修復迴圈」情境，必須可以回答：為何 Runtime 判定沒有進展、嘗試了幾次、使用多少資源、下一輪 PDCA 的提案為何、誰有權批准，以及哪一版 Skill / Policy 對應這段歷史。
+
+## v3.1 Exploration DAG、分支追蹤與 PDCA
+
+Dashboard 追加探索群組 DAG，按 Requirement/Spec Revision → Exploration → Branch/Parent Fork → Owner Instance → Candidate RTL SHA → EDA Evidence → Comparison/Pareto → MergeProposal → Release 展開。必備每條 branch 的累計 Token/EDA 成本、有效進展、阻塞、Stale、衝突、Merge 後 ReGate 狀態、淘汰理由。Event Journal/Branch Registry 可重建 Graph；不能只用 branch 名稱猜關係。跨分支證據污染必須直接標示 REJECTED。失敗候選也保留供 PDCA，不能直接刪紀錄。
