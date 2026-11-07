@@ -8,14 +8,14 @@
 | 欄位 | 值 |
 |---|---|
 | status_version | 1.0 |
-| updated_at_utc | 2026-11-07T11:48:53Z |
-| last_progress_at_utc | 2026-11-07T11:48:53Z |
+| updated_at_utc | 2026-11-07T12:06:44Z |
+| last_progress_at_utc | 2026-11-07T12:06:44Z |
 | instruction_version | v2.0 / E9 Final Closure |
 | instruction_commit | 5936429058e6bf9fecbfa35ae8be5cc92ba91218 |
 | mission_state | ACTIVE |
 | active_stage | E9_FINAL_VERIFICATION |
-| current_work_item | 新RC最終CI執行中；原50回歸49/1維持；新portable離線安裝PASS，170欄與交付包驗收中 |
-| stage_gate | SUCCESSOR_CI_RUNNING / PORTABLE_INSTALL_PASS / FINAL_ACCEPTANCE_PENDING |
+| current_work_item | 最終CI22及portable真PDF流程PASS；170欄修正版獨立PASS；最後UI回歸與ZIP驗收中 |
+| stage_gate | SUCCESSOR_ACTUAL_CI_22_PASS / NATIVE_170_BOUNDED_PASS / FINAL_UI_PACKAGE_PENDING |
 | engineering_release_status | NOT_READY |
 | production_status | NOT_AUTHORIZED |
 | release_commit | fb1aa0e6dc9da4fedcd285ea2471dff230f862ad |
@@ -296,3 +296,14 @@ Main已透過Chrome查核CURRENT_WORK commit `8ad94b467bb30731d5c631011dc132a467
 交付包盤點906個Git source/test files與16個描述檔，最終freeze／ZIP及獨立讀回尚待CI、欄位與Main Gate。獨立Viewer的126個既有資產SHA逐項符合原inventory，但資產不在Python依賴包／source包；外部file-preprocessor亦為獨立共同服務，包內僅client與設定。部署文件明列共同服務先決條件，新host／正式共同服務部署不宣PASS。
 
 整體仍NOT_READY。下一步完成新CI、portable真flow、170欄契約、最終包與逐Gate判定。真corpus／live RAG／正式規模品質仍NOT_TESTED，E10未授權。本次僅Chrome線上編輯去敏摘要。
+
+
+## 最新 CI 與欄位契約 Gate
+
+最終候選版fb1aa0e實際本機隔離CI job已完成，22/22 PASS、exit0、0 required skips／fail／timeout。source與inputs前後SHA相同，Main核對22個子收據，20項guard也逐項通過。遠端CI仍NOT_TESTED。這是新候選版的實際結果，上文的進行中記錄保留為歷史。
+
+新portable profiles真PDF→Review→Approval→Index→Serving也actualexit0，3chunks／1圖片／4Serving checks、source／14models前後一致。Main11項收據／hash／結果檢查PASS。這是依賴包內原RC backup對應的dependency-only flow；新候選版另有上述實際CI PDF流程，不改舊包內source身份。
+
+170欄第一版雖數量及hash正確，獨立語意覆核找到17列identity／來源recipe描述錯誤；另立修正版，改成實際KA Evidence identity及source／recipe composites，明確區分模型runtime收據與每文件manifest。修正版170unique、119sourcepins、14receipt hashes、原R1與predecessor evidence保留；Main140檢查及非作者review PASS。161 bounded mappings／9已批准scalar supersessions不代表任意legacy scalar parity，原29歷史unresolved未被升級。
+
+由於本次Review JS／CSS有變更，正在用新候選版與另一組隔離fixture端口補final混批Chrome操作及45頁快取回歸；舊Viewer5項PASS不算這項新UI结果。最終source ZIP、描述檔及引用的獨立逐byte驗收仍待完成。整體NOT_READY，E10未授權，無需使用者為當前本機工程追加授權。
