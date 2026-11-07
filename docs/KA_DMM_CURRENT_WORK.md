@@ -2,7 +2,15 @@
 
 > 更新日期：2026-11-07  
 > **唯一最新的完整執行授權**：[KA-DMM Autonomous End-to-End DS Replacement Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md)  
-> 狀態：**完整工程任務已一次授權，等待 Coding Agent 讀取並執行。**
+> 狀態：**E9 Final Closure 已發布，Coding Agent 應在既有 KA 專案持續執行至 Engineering Complete／Ready for Release 的真實 Gate。E10 正式切換未授權。**
+
+## 本輪最新執行指令（E9 Final Closure）
+
+**請 Coding Agent Main 優先讀取並執行：[KA-DMM E9 Final Closure：最終工程收斂與發行驗收指令](./KA_DMM_E9_Final_Closure_Execution_Guide.md)。**
+
+本 E9 指引是 [Autonomous Mission v2.0](./KA_DMM_Autonomous_End_to_End_DS_Replacement_Mission_v2.0.md) 之實施細則，不重新授權 E10，也不更改正式環境安全界線。Main 必須接續既有 E0～E8 局部 PASS 與 22 步整合結果，完成 Feature Commits、Manifest、全離線 PDF 重建、真 CI、170 欄產品責任、DS 退休驗證、最終 Release Gates 與可重跑交付包。不得重頭另建專案、逐項等待 ChatGPT 或以狀態檔摘要代替產品驗收。
+
+請從 main 取得兩份指令檔的實際 GitHub Commit／Blob SHA，並讀取既有本地 KA 工作樹與 receipts 以取得真實最新狀態。持續依下節只更新根目錄唯一去敏同步檔，不得將內部工程資料推送公開。
 
 ## 強制狀態同步
 
