@@ -1,6 +1,7 @@
 # KA-DMM：自主完成 Docling 原生遷移及 DS 淘汰總任務
 
-> **版本：v2.0**  
+> **版本：v2.0**
+> **狀態同步增補（2026-11-07）**：本任務新增強制公開去敏狀態回報，唯一同步檔案為 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。本增補不改變 E0 至 E9 自主授權。  
 > **日期：2026-11-07**  
 > **任務狀態：待 Coding Agent 自主執行的完整工程規格，非已完成宣告**  
 > **指定執行者：Coding Agent（Main）與其可使用的 Sub Agents**  
@@ -415,6 +416,60 @@ Main 應在本地 KA Repo 製作（允許按 Repo 既有結構調整路徑）：
 7. Main 能提出完整 Release Candidate Commit、功能支援表、風險與部署方法，而非只說「研究完成」。
 
 **Production Complete** 必須另外具備：使用者授權、實際資料備份／Cutover、觀測結果、最後 DS 停寫／移除成功與生產復原能力證據。未執行不得宣稱 production 已完成。
+
+## 8A. 必須持續同步的公共狀態契約
+
+**強制要求**：Coding Agent 主代理必須將本次長程自主任務的進展同步至公開交接 Repository 根目錄的 [KA_DMM_STATUS_SYNC.md](../KA_DMM_STATUS_SYNC.md)。這是對使用者的進度透明度要求，不改變自主執行授權，也不需要使用者在中間轉送報告。
+
+### 8A.1 固定寫入目的地與頻率
+
+- Repository：caseykcc0124/codex_coding，Branch：main。
+- 固定目標路徑：KA_DMM_STATUS_SYNC.md。此檔已由交接端建立模板；**不要另外建立第二份狀態文件**。
+- Agent 只可在自身工作執行中定期推送，不是要求 ChatGPT 替它撰寫或猜測進度。
+- **任務 ACTIVE 時至少每 60 分鐘同步一次**。這是最大間隔，不必每次都增加新功能。即使沒有進展，也應更新 heartbeat、正在處理的工作及下一步，但不可假裝進度。
+- WorkItem 開始／完成、Gate 轉換、重大阻擋與恢復、Stage 改變、Engineering Complete、READY_FOR_RELEASE、需使用者授權或任務暫停時**立即同步**。
+- Agent 進入 PAUSED 或完成狀態後不需持續心跳；下一次重新開始時立即轉回 ACTIVE。
+- 無法使用計時器時，Main 透過既有 Loop／Heartbeat／Agent scheduler 機制實作每 60 分鐘的同步檢查；**不應另啟無人管理的背景程序、未授權服務或自動化**。如執行環境本身無法維持長時間運行，應在每次可執行段落開始與結束時更新，標明實際可達成的頻率，不能虛報為常駐。
+
+### 8A.2 每次必須同步的資訊
+
+請更新固定 Markdown 表格／區段，保留可供人直接閱讀的摘要與機器可分析的欄位：
+
+1. updated_at_utc、updated_at_taipei、last_progress_at_utc 與 instruction_version／instruction_commit。
+2. mission_state、active_stage、current_work_item、stage_gate、engineering_release_status、production_status。
+3. **真正交付的新能力**：目前哪些來源／Review／Index／Viewer 路徑可執行，已實作與已測試分開。
+4. 測試 Passed／Failed／Skipped，新的 regression 與前輪已知 PPTX red baseline 的區別。
+5. 每個 E0～E10 的狀態、受影響範圍、下一個可交付里程碑。
+6. Blocker、最小可重現原因、已採用方案、下一項自行修復動作，以及哪個事項真的需要使用者授權。
+7. Evidence／Citation 的錯引數、是否仍有 DS 正式依賴、Shadow／Staging／Production 位置及回退驗證摘要。
+8. 若 User Action = YES，給出唯一或少量明確決策點、風險、推薦與不授權時可繼續做的其他工作。
+
+所有量化數字都有時間及範圍，不可只用「跑了 100 個測試」代替工程進度。每次更新若無新增實際交付，應記「本次無新增可用能力，仍在修復 X」，避免虛假 Completed。
+
+### 8A.3 寫入權限、併發與 GitHub API
+
+使用 Agent 已獲授權的 GitHub/HTTP 寫入能力，採用 GitHub 內容 API 或等價操作，先讀取檔案 Blob SHA，再做條件式更新；失敗時重讀、合併後重試。禁止使用強制推送覆蓋其他編輯。**只有 Main Agent 寫此檔，Sub Agent 交付 Main 匯總，不得各自互相覆寫。**
+
+此公共 Repo 的例外授權**僅涵蓋這個去敏狀態檔**。不得把本地 KA 私有原始碼、公司內部資料、完整 logs、檔案路徑、真實 Source Fixture、可識別環境資訊、密鑰或未審核內容推送公開。可用代號、測試類別和量化摘要；完整 Commit／Log／測試證據留在原本本地 KA Repo。若對某內容是否可公開無把握，省略內容、標示已保留本地證據，不要上傳原文。
+
+若 Agent 缺寫入權限或 GitHub API 暫時不可達：將錯誤記錄在本地工作日誌，重試；仍可繼續工程。**不能宣稱已同步**。待可用後補上去敏狀態，並在下一次對使用者報告寫入失敗原因。此情況不授權讀取新秘密或變更網路政策。
+
+### 8A.4 監督者讀取與陳舊判定
+
+ChatGPT 將以另一個定期任務讀取上述公開檔案。Agent 應保持固定欄位及穩定 Markdown 格式，讓監督者能比較：
+
+- 狀態是否變更、是否新增可用能力、Gate 是否改變；
+- 發生新 BLOCKED／需授權／完成；
+- updated_at 是否在持續 ACTIVE 時落後超過 3 小時。
+
+**更新過久只代表狀態資料可能過期，不等於 Coding Agent 真的停止工作或產品當機。** 避免為「檔案沒更新」直接觸發有風險的修復或重新部署。
+
+### 8A.5 強制同步 Gate
+
+- 本輪交付、任何 E 級重大完成及 READY_FOR_RELEASE，必須在同步檔留下去敏摘要。
+- 公開狀態檔的最新更新須含最新 Gate 與 next_action；未經 GitHub 實際寫入成功不得聲稱同步 PASS。
+- 若狀態檔更新失敗，但產品工程有真實成果，分開記錄「產品 Gate」與「狀態同步 Gate」，**不抹除已完成的工程成果**；Main 必須自主補正同步。
+
 
 ## 9. 主代理如何自行推進，避免無限往返
 
